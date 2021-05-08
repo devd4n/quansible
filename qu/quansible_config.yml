@@ -1,0 +1,6 @@
+
+
+
+
+PATH_ROLES="ansible/public/roles"
+PATH_INVENTORY="qu/private/prod/inventory.yml"
