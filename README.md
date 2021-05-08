@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-# quansible
-=======
 # quansible
 
 ## About
@@ -16,11 +13,14 @@ Currently only debian is Supported
 following Steps must be run on the host (as root):
 
 1. apt-get install git
-2. git clone https://github.com/devd4n/quansible-init.git
-3. cd quansible-init
+2. git clone https://github.com/devd4n/quansible.git
+3. cd quansible
 4. chmod +x quansible_setup.sh
 5. ./quansible_setup.sh setup
-6. ./quansible_setup.sh init
+6. ./quansible_setup.sh update
+
+## Update Quansible
+./quansible_setup.sh update
 
 ## Why
 
@@ -90,4 +90,3 @@ git commit -m "Initial Commit"
 git remote add origin <Git Repo Url>
 git remote -v
 git push origin main
->>>>>>> init

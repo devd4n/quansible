@@ -52,7 +52,7 @@ else
  if [[ $1 == "setup" ]]
  then
   setup_ansible
- elif [[ $1 == "init" ]]
+elif [[ $1 == "update" ]]
  then
   update_quansible
  else
