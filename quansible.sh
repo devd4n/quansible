@@ -3,7 +3,8 @@
 $QUANSIBLE_DIR = $(pwd)
 $ROOT_DIR = "../$QUANSIBLE_DIR"
 
-if test -f "$SCRIPT_DIR/quansible_config"; then
+echo "QUANSIBLE_DIR: $QUANSIBLE_DIR"
+if test -f "$QUANSIBLE_DIR/quansible_config"; then
     . $QUANSIBLE_DIR/quansible_config
     echo "A custom quansible_config exists."
 else
