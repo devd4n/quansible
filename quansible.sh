@@ -74,7 +74,7 @@ function init_ansible () {
 # Run function defined by parameter of this script (setup | init)
 if [[ $1 == "setup_env" ]]
 then
- setup_environment
+ install_environment
 elif [[ $1 == "setup" ]]
 then
   setup_ansible
