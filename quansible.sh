@@ -1,14 +1,14 @@
 #!/bin/bash
 
-QUANSIBLE_DIR = $(pwd)
-ROOT_DIR = "../$QUANSIBLE_DIR"
+QUANSIBLE_DIR=$(pwd)
+ROOT_DIR="$(dirname "$QUANSIBLE_DIR")"
 
 echo "QUANSIBLE_DIR: $QUANSIBLE_DIR"
-if test -f "$QUANSIBLE_DIR/quansible_config"; then
+if test -f "$ROOT_DIR/quansible_config"; then
     . $QUANSIBLE_DIR/quansible_config
     echo "A custom quansible_config exists."
 else
-    . $QUANSIBLE_DIR/quansible/quansible_config
+    . $QUANSIBLE_DIR/quansible_config
     echo "NO custom quansible_config exists."
 fi
 
