@@ -18,6 +18,7 @@ function upgrade(){
 
 # Install all requirements and create the virtualenv for ansible
 function install_environment () {
+  apt-get update
   # Install system requirements for virtualenv
   apt-get install sudo python3-pip git python3-venv -y
   # https://www.codegrepper.com/code-examples/shell/python+headers+are+missing+in+%2Fusr%2Finclude%2Fpython3.6m+%26quot%3Byum%26quot%3B
