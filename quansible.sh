@@ -29,6 +29,8 @@ function install_environment () {
   python3 -m pip install --upgrade pip
   python3 -m pip install virtualenv
 
+  mkdir $DIR_ANSIBLE
+  mkdir $DIR_INVENTORY
   echo "---" > $DIR_ANSIBLE/ansible_vars.yml
   echo "root_dir: $DIR_ANSIBLE" >> $DIR_ANSIBLE/ansible_vars.yml
   echo "user_ansible_admin: $USER_ANSIBLE" >> $DIR_ANSIBLE/ansible_vars.yml
@@ -75,13 +77,7 @@ function init_ansible () {
 # Run function defined by parameter of this script (setup | init)
 if [[ $1 == "setup_env" ]]
 then
- install_environment
-elif [[ $1 == "setup" ]]
-then
-  setup_ansible
-elif [[ $1 == "init" ]]
-then
-  init_ansible
+  install_environment
 elif [[ $1 == "update" ]]
 then
   setup_ansible
