@@ -1,8 +1,7 @@
 # quansible
 
 ## About
-quansible is a tool to create and maintain a ansible mgmt server.
-quansible-init is a tool for creating an ansible structure on an ansible host
+quansible is a tool for creating an ansible structure on an ansible host
 
 ## Supported OSes
 
@@ -15,12 +14,12 @@ following Steps must be run on the host (as root):
 1. apt-get install git
 2. git clone https://github.com/devd4n/quansible.git
 3. cd quansible
-4. chmod +x quansible_setup.sh
-5. ./quansible_setup.sh setup
-6. ./quansible_setup.sh update
+4. chmod +x quansible.sh
+5. ./quansible.sh setup
+6. ./quansible.sh update
 
 ## Update Quansible
-./quansible_setup.sh update
+./quansible.sh update
 
 ## Why
 
@@ -39,26 +38,29 @@ Quansible is seperated in two different subdirectories:
 qu: contains all configuration changes and the structure of the project.
 ansible: contains the manuall and individual ansible files.
 
-./quansible
-  README.md                   <--- Here we are ---
-  ./qu
-     config
-     requirements.yml
-     quansible.yml            # contains Playbooks which should be run on this ansible host to setup/update but not override
-     quansible_setup.sh       # Shell Script to setup the complete structure
-  ./ansible
+./servicename                 x
+  README.md                   x <--- Here we are ---
+  quansible_update.sh
+  quansible_config.yml                  
+  ./quansible                 x
+     quansible.sh             x # Maintain Script
+     quansible-init.yml       x # Maintain Playbook
+     quansible-vars.yml       x
+     quansible_config.yml     x
+  ./ansible       
+    ansible.cfg
     ansible.yml
     ./private
       inventory.yml
-      /prod
-        /playbooks
-            monitoring.yml         # a Playbook to retrieve data of the infrastructure
-            infra.yml       # contains Playbooks that should be run often or to initialize the architecture
-        /secrets
-        /groups
-        /hosts
-     ./public
+      /playbooks
+          monitoring.yml         # a Playbook to retrieve data of the infrastructure
+          infra.yml       # contains Playbooks that should be run often or to initialize the architecture
+      /secrets
+      /groups
+      /hosts
+    ./public
         /roles
+  ./venv
 
 ### the private part
 
@@ -68,7 +70,7 @@ ansible: contains the manuall and individual ansible files.
 ./private/hosts
 ./private/groups
 
-in this directories are files, that shouldn't be public available like the infrastructure, vars, vaults, ips and so on. (If needed ths part can also be versionized in github or somewhere else)
+in this directories are files, that shouldn't be public available like the infrastructure, vars, vaults, ips and so on. (If needed ths part can also be versionized in a private/secure git server or somewhere else)
 
 ### the public part
 
