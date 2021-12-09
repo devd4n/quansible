@@ -1,7 +1,7 @@
 #!/bin/bash
 
-$QUANSIBLE_DIR = $(pwd)
-$ROOT_DIR = "../$QUANSIBLE_DIR"
+QUANSIBLE_DIR = $(pwd)
+ROOT_DIR = "../$QUANSIBLE_DIR"
 
 echo "QUANSIBLE_DIR: $QUANSIBLE_DIR"
 if test -f "$QUANSIBLE_DIR/quansible_config"; then
