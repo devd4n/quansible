@@ -36,9 +36,9 @@ function install_environment () {
   echo "root_dir: $DIR_ANSIBLE" >> $DIR_ANSIBLE/ansible_vars.yml
   echo "user_ansible_admin: $USER_ANSIBLE" >> $DIR_ANSIBLE/ansible_vars.yml
 
-  echo "[defaults]" >> $DIR_ANSIBLE/ansible.cfg
-  echo "inventory = $DIR_INVENTORY/inventory.yml  ; This points to the file that lists your hosts" > $DIR_ANSIBLE/ansible.cfg
-  echo "roles_path = $ROLES_PATH" > $DIR_ANSIBLE/ansible.cfg
+  echo "[defaults]" > $DIR_ANSIBLE/ansible.cfg
+  echo "inventory = $DIR_INVENTORY/inventory.yml  ; This points to the file that lists your hosts" >> $DIR_ANSIBLE/ansible.cfg
+  echo "roles_path = $ROLES_PATH" >> $DIR_ANSIBLE/ansible.cfg
 
   useradd -m $USER_ANSIBLE
   mkdir $ROOT_DIR
