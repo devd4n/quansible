@@ -41,6 +41,7 @@ function install_environment () {
   mkdir $ROOT_DIR
   chown -R $USER_ANSIBLE:$USER_ANSIBLE $SCRIPT_DIR
   chown -R $USER_ANSIBLE:$USER_ANSIBLE $ROOT_DIR
+  mkdir "/etc/sudoers.d"
   echo "$USER_ANSIBLE  ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/$USER_ANSIBLE
 }
 
