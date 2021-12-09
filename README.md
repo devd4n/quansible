@@ -15,7 +15,7 @@ following Steps must be run on the host (as root):
 2. git clone https://github.com/devd4n/quansible.git
 3. cd quansible
 4. chmod +x quansible.sh
-5. ./quansible.sh setup
+5. ./quansible.sh setup_env
 6. ./quansible.sh update
 
 ## Update Quansible
@@ -41,15 +41,15 @@ ansible: contains the manuall and individual ansible files.
 ./servicename                 x
   README.md                   x <--- Here we are ---
   quansible_update.sh
-  quansible_config.yml                  
+  quansible_config               
   ./quansible                 x
      quansible.sh             x # Maintain Script
      quansible-init.yml       x # Maintain Playbook
      quansible-vars.yml       x
-     quansible_config.yml     x
+     quansible_config         x
   ./ansible       
     ansible.cfg
-    ansible.yml
+    ansible_vars.yml
     ./private
       inventory.yml
       /playbooks

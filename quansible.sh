@@ -62,7 +62,7 @@ function init_ansible () {
   ####################### START of DEVELOPEMENT ##########################
   # Define configs and vars for ansible init playbook
   EXTRA_VARS="@$DIR_ANSIBLE_EXTRA_VARS/ansible_vars.yml"
-  INIT_PLAYBOOK=$DIR_QUANSIBLE/quansible_init.yml
+  INIT_PLAYBOOK=$DIR_QUANSIBLE/quansible-init.yml
   ANSIBLE_CONFIG=$DIR_ANSIBLE_CFG/ansible.cfg
   export EXTRA_VARS
   export INIT_PLAYBOOK
