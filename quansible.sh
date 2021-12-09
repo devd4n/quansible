@@ -4,10 +4,10 @@ $QUANSIBLE_DIR = $(pwd)
 $ROOT_DIR = "../$QUANSIBLE_DIR"
 
 if test -f "$SCRIPT_DIR/quansible_config"; then
-    . $SCRIPT_DIR/quansible_config
+    . $QUANSIBLE_DIR/quansible_config
     echo "A custom quansible_config exists."
 else
-    . $SCRIPT_DIR/quansible/quansible_config
+    . $QUANSIBLE_DIR/quansible/quansible_config
     echo "NO custom quansible_config exists."
 fi
 
@@ -26,8 +26,8 @@ function install_environment () {
   # https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=998232
   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
-  pip3 install --upgrade pip
-  pip3 install virtualenv
+  python3 -m pip install --upgrade pip
+  python3 -m pip install virtualenv
 
   echo "---" > $DIR_ANSIBLE/ansible_vars.yml
   echo "root_dir: $DIR_ANSIBLE" >> $DIR_ANSIBLE/ansible_vars.yml
