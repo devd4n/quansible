@@ -41,7 +41,7 @@ function install_environment () {
   mkdir $ROOT_DIR
   chown -R $USER_ANSIBLE:$USER_ANSIBLE $SCRIPT_DIR
   chown -R $USER_ANSIBLE:$USER_ANSIBLE $ROOT_DIR
-  echo "$USER_ANSIBLE  ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/$USER_ANSIBLE
+  echo "$USER_ANSIBLE  ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/$USER_ANSIBLE
 }
 
 # func: Create init stucture and pull quansible playbook
