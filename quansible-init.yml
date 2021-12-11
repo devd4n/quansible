@@ -2,6 +2,7 @@
 - name: Initialize ansible mgmt host localy
   hosts: localhost
   connection: local
+  become: yes
 
   tasks:
   - name: Ensure group "ansible_admins" exists
@@ -11,16 +12,18 @@
 
   - name: Create Ansible Admin user and Group
     user:
-      name: ansible_admin
+      name: "{{ user_ansible_admin }}"
       comment: "local ansible admin"
       group: ansible_admins
+      groups: sudo
+      append: yes
 
   - name: Create folders with ownership
     file:
       state   : directory
       recurse : yes
       path    : "{{ item }}"
-      owner: ansible_admin
+      owner: "{{ user_ansible_admin }}"
       group: ansible_admins
       mode    : "0755"
     with_items:
@@ -34,7 +37,7 @@
       path: "{{ item }}"
     with_items:
       - "{{ root_dir }}/ansible/private/inventory.yml"
-      - "{{ root_dir }}/ansible/private/ansible.cfg"
+      - "{{ root_dir }}/ansible/ansible.cfg"
 
   - name: Set environment variables (ANSIBLE_CONFIG)
     shell: echo "export ANSIBLE_CONFIG={{ root_dir }}/ansible/private/ansible.cfg" >> /etc/profile.d/ansible_envs.sh
@@ -47,14 +50,14 @@
     register: result
 
   - name: Parse Ansible Roles
-    local_action: copy content={{result.stdout}} dest={{ root_dir }}/qu/requirments.yml
+    local_action: copy content={{result.stdout}} dest={{ root_dir }}/ansible/requirements.yml
 
   - name: write Ansible Roles to requirements.yml
     lineinfile:
-      dest="{{ root_dir }}/qu/requirements.yml"
+      dest="{{ root_dir }}/ansible/requirements.yml"
       regexp='^(.*)$'
       line='- src:\1'
       backrefs=yes
 
   - name: get Roles from github
-    command: ansible-galaxy install -r "{{ root_dir }}/qu/requirements.yml"
+    command: ansible-galaxy install -r "{{ root_dir }}/ansible/requirements.yml"

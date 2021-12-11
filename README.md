@@ -11,12 +11,14 @@ Currently only debian is Supported
 
 following Steps must be run on the host (as root):
 
+0. Navigate to Path of choice
 1. apt-get install git
 2. git clone https://github.com/devd4n/quansible.git
 3. cd quansible
 4. chmod +x quansible.sh
 5. ./quansible.sh setup_env
-6. ./quansible.sh update
+6. su ansible-admin
+7. ./quansible.sh update
 
 ## Update Quansible
 ./quansible.sh update
