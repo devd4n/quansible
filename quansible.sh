@@ -51,7 +51,6 @@ function install_environment () {
 # func: Create init stucture and pull quansible playbook
 # Run as $USER_ANSIBLE
 function setup_ansible () {
-  git clone https://github.com/devd4n/quansible.git
   python3 -m venv $QUANSIBLE_VENV
   source $QUANSIBLE_VENV/bin/activate
   python3 -m pip install --upgrade pip
@@ -74,7 +73,6 @@ function init_ansible () {
   echo $INIT_PLAYBOOK
   source $QUANSIBLE_VENV/bin/activate
   ansible-playbook --extra-vars $EXTRA_VARS $INIT_PLAYBOOK
-  ansible-galaxy install -r "$DIR_ANSIBLE_REQUIREMENTS/requirements.yml"
 }
 
 # Run function defined by parameter of this script (setup | init)
