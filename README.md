@@ -19,6 +19,7 @@ following Steps must be run on the host (as root):
 5. ./quansible.sh setup_env
 6. su ansible_admin
 7. ./quansible.sh update
+8. complete logout from shell and relogon
 
 ## Update Quansible
 ./quansible_update.sh
