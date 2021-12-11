@@ -25,7 +25,7 @@
       path    : "{{ item }}"
       owner: "{{ user_ansible_admin }}"
       group: ansible_admins
-      mode    : "0755"
+      mode    : "0775"
     with_items:
     - "{{ root_dir }}"
     - "{{ root_dir }}/ansible/private"
@@ -53,11 +53,10 @@
     local_action: copy content={{result.stdout}} dest={{ root_dir }}/ansible/requirements.yml
 
   - name: write Ansible Roles to requirements.yml
-    lineinfile:
-      dest="{{ root_dir }}/ansible/requirements.yml"
-      regexp='^(.*)$'
-      line='- src:\1'
-      backrefs=yes
+    replace:
+      path: "{{ root_dir }}/ansible/requirements.yml"
+      regexp: '^(.*)$'
+      replace: '- src: \1'
 
   - name: get Roles from github
     command: ansible-galaxy install -r "{{ root_dir }}/ansible/requirements.yml"
