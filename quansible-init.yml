@@ -57,6 +57,3 @@
       path: "{{ root_dir }}/ansible/requirements.yml"
       regexp: '^(.*)$'
       replace: '- src: \1'
-
-  - name: get Roles from github
-    command: ansible-galaxy install -r "{{ root_dir }}/ansible/requirements.yml"
