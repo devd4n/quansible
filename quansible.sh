@@ -33,7 +33,7 @@ function install_environment () {
   mkdir $DIR_ANSIBLE
   mkdir $DIR_INVENTORY
   echo "---" > $DIR_ANSIBLE_EXTRA_VARS/ansible_vars.yml
-  echo "root_dir: $DIR_ROOT" >> $DIR_ANSIBLE_EXTRA_VARS/ansible_vars.yml
+  echo "root_dir: $ROOT_DIR" >> $DIR_ANSIBLE_EXTRA_VARS/ansible_vars.yml
   echo "user_ansible_admin: $USER_ANSIBLE" >> $DIR_ANSIBLE_EXTRA_VARS/ansible_vars.yml
 
   echo "[defaults]" > $DIR_ANSIBLE/ansible.cfg
