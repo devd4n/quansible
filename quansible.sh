@@ -67,9 +67,11 @@ function init_ansible () {
   EXTRA_VARS="@$DIR_ANSIBLE_EXTRA_VARS/ansible_vars.yml"
   INIT_PLAYBOOK=$DIR_QUANSIBLE/quansible-init.yml
   ANSIBLE_CONFIG=$DIR_ANSIBLE_CFG/ansible.cfg
-  export EXTRA_VARS
-  export INIT_PLAYBOOK
-  export ANSIBLE_CONFIG
+  #export EXTRA_VARS
+  #export INIT_PLAYBOOK
+  #export ANSIBLE_CONFIG
+  echo $EXTRA_VARS
+  echo $INIT_PLAYBOOK
   source $QUANSIBLE_VENV/bin/activate
   ansible-playbook --extra-vars $EXTRA_VARS $INIT_PLAYBOOK
   ansible-galaxy install -r "$DIR_ANSIBLE_REQUIREMENTS/requirements.yml"
