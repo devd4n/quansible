@@ -17,11 +17,14 @@ following Steps must be run on the host (as root):
 3. cd quansible
 4. chmod +x quansible.sh
 5. ./quansible.sh setup_env
-6. su ansible-admin
+6. su ansible_admin
 7. ./quansible.sh update
 
 ## Update Quansible
-./quansible.sh update
+./quansible_update.sh
+
+## Upgrade Quansible (Update the Update Script)
+./quansible/quansible.sh upgrade
 
 ## Why
 
