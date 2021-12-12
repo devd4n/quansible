@@ -43,7 +43,7 @@
   - name: Create quansible.cfg if not exists
     copy:
       src: "{{ dir_quansible }}/quansible.cfg"
-      dst: "{{ root_dir }}/quansible.cfg"
+      dest: "{{ root_dir }}/quansible.cfg"
       force: no
 
   - name: Set environment variables (ANSIBLE_CONFIG)
