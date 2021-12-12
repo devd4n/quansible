@@ -38,11 +38,34 @@ in the following Structure ROOT_DIR is replaced by . for Root.
 
 The structure is splitted in two different base directories
 
+### Current structure
+
+`-- (ROOT_DIR)
+    |-- ansible
+    |   |-- ansible.cfg
+    |   |-- ansible_vars.yml
+    |   |-- private
+    |   |   `-- inventory.yml
+    |   |-- public
+    |   |   `-- roles
+    |   |       |-- role-1
+    |   |       `-- role-2
+    |   `-- requirements.yml
+    |-- quansible
+    |   |-- README.md                 x
+    |   |-- quansible-init.yml        x
+    |   |-- quansible.sh              x
+    |   |-- quansible_config          x
+    |   `-- quansible_config.yml      x
+    `-- venv
+        |-- bin
+
 ### Final structure
 
-Quansible is seperated in two different subdirectories:
-qu: contains all configuration changes and the structure of the project.
+Quansible is seperated in three different subdirectories:
+quansible: contains all configuration changes and the structure of the project.
 ansible: contains the manuall and individual ansible files.
+venv: Python Venv to use for operation
 
 ./servicename                 x
   README.md                   x <--- Here we are ---
