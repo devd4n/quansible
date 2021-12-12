@@ -45,24 +45,24 @@ quansible: contains all configuration changes and the structure of the project.
 ansible: contains the manuall and individual ansible files.
 venv: Python Venv to use for operation
 
-|-- "ROOT_DIR"
-    |-- ansible
-    |   |-- ansible.cfg
-    |   |-- ansible_vars.yml
-    |   |-- private
-    |   |   -- inventory.yml
-    |   |-- public
-    |   |   -- roles
-    |   |       |-- ansible_role_sshd
-    |   |       |-- ansible_role_sshd-agent
-    |   |-- requirements.yml
-    |-- quansible
-    |   |-- README.md
-    |   |-- quansible-init.yml
-    |   |-- quansible.cfg
-    |   -- quansible.sh
-    |-- quansible.cfg
-    |-- venv
+|-- "ROOT_DIR"__
+    |-- ansible__
+    |   |-- ansible.cfg__
+    |   |-- ansible_vars.yml__
+    |   |-- private__
+    |   |   -- inventory.yml__
+    |   |-- public__
+    |   |   -- roles__
+    |   |       |-- ansible_role_sshd__
+    |   |       |-- ansible_role_sshd-agent__
+    |   |-- requirements.yml__
+    |-- quansible__
+    |   |-- README.md__
+    |   |-- quansible-init.yml__
+    |   |-- quansible.cfg__
+    |   -- quansible.sh__
+    |-- quansible.cfg__
+    |-- venv__
 
 ### the private part
 
