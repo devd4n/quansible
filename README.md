@@ -58,7 +58,7 @@ venv: Python Venv to use for operation
     |-- venv
 ```
 
-### the private part
+#### The private part
 
 in this directories are files, that shouldn't be public available like the infrastructure, vars, vaults, ips and so on. (If needed this part can also be versionized in a private/secure git server or somewhere else)
 
@@ -74,7 +74,7 @@ but other structures are also possible.
 Recommendations are under development.
 
 
-### the public part
+#### The public part
 
 ./roles
 
