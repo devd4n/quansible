@@ -15,6 +15,7 @@
       name: "{{ user_ansible_admin }}"
       comment: "local ansible admin"
       group: ansible_admins
+      shell: /bin/bash
       groups: sudo
       append: yes
 
