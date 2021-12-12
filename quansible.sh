@@ -73,7 +73,9 @@ function init_ansible () {
   echo $INIT_PLAYBOOK
   source $QUANSIBLE_VENV/bin/activate
   ansible-playbook --extra-vars $EXTRA_VARS $INIT_PLAYBOOK
+  exec bash -l
   ansible-galaxy install -r "$DIR_ANSIBLE_REQUIREMENTS/requirements.yml"
+  logout
 }
 
 # Run function defined by parameter of this script (setup | init)
