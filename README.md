@@ -4,11 +4,9 @@
 quansible is a tool for creating an ansible structure on an ansible host
 
 ## Supported OSes
-
 Currently only debian is Supported
 
 ## How to use
-
 following Steps must be run on the host (as root):
 
 0. Navigate to Path of choice
@@ -28,17 +26,11 @@ following Steps must be run on the host (as root):
 ./quansible/quansible.sh upgrade
 
 ## Why
-
 This quansible Tool is a tool to simply start with an ansible environment without the need of a tutorial.
 
-## End Structure
-
+## Structure
 ROOT_DIR can be defined in the quansible_setup.sh script
 in the following Structure ROOT_DIR is replaced by . for Root.
-
-The structure is splitted in two different base directories
-
-### Structure
 
 Quansible is seperated in three different subdirectories:
 quansible: contains all configuration changes and the structure of the project.
