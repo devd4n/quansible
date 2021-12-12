@@ -79,11 +79,6 @@ function install_environment () {
 if [[ $1 == "setup-env" ]]
 then
   install_environment
-elif [[ $1 == "install" ]]
-then
-  install_environment
-  su $USER_ANSIBLE
-  setup_ansible
 elif [[ $1 == "update" ]]
 then
   setup_ansible
