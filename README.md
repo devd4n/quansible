@@ -68,13 +68,18 @@ venv: Python Venv to use for operation
 
 ### the private part
 
+in this directories are files, that shouldn't be public available like the infrastructure, vars, vaults, ips and so on. (If needed this part can also be versionized in a private/secure git server or somewhere else)
+
+Possible Structure:
 ./private
 ./private/secrets
 ./private/playbooks
 ./private/hosts
 ./private/groups
 
-in this directories are files, that shouldn't be public available like the infrastructure, vars, vaults, ips and so on. (If needed ths part can also be versionized in a private/secure git server or somewhere else)
+but other structures are also possible.
+Recommendations are under development.
+
 
 ### the public part
 
