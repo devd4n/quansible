@@ -78,11 +78,12 @@ function init_ansible () {
 }
 
 function install_roles () {
+  source $QUANSIBLE_VENV/bin/activate
   ansible-galaxy install -r "$DIR_ANSIBLE_REQUIREMENTS/requirements.yml"
 }
 
 # Run function defined by parameter of this script (setup | init)
-if [[ $1 == "setup_env" ]]
+if [[ $1 == "setup-env" ]]
 then
   install_environment
 elif [[ $1 == "update" ]]
@@ -93,6 +94,6 @@ elif [[ $1 == "update-roles" ]]
 then
   install_roles
 else
-  echo "usage: $0 <setup|init>"
+  echo "usage: $0 <setup-env|update|update-roles>"
  exit
 fi

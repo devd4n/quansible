@@ -16,9 +16,10 @@ following Steps must be run on the host (as root):
 2. git clone https://github.com/devd4n/quansible.git
 3. cd quansible
 4. chmod +x quansible.sh
-5. ./quansible.sh setup_env
+5. ./quansible.sh setup-env
 6. su ansible_admin
 7. . ./quansible.sh update
+8. ./quansible.sh update-roles
 
 ## Update Quansible
 ./quansible_update.sh
