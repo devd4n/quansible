@@ -20,6 +20,7 @@ ANSIBLE_VERSION="4.0.0"
 if test -f "$ROOT_DIR/quansible.cfg"; then
     echo "load custom quansible.cfg"
     . "$ROOT_DIR/quansible.cfg"
+fi
 
 function setup_ansible () {
   python3 -m venv $QUANSIBLE_VENV
@@ -40,9 +41,9 @@ function setup_roles () {
   ansible-galaxy install -r "$DIR_ANSIBLE_REQUIREMENTS/requirements.yml"
 }
 
-function upgrade(){
-  echo "cd $ROOT_DIR" >> $ROOT_DIR/update_quansible.sh
-  echo "git clone $GITHUB_QUANSIBLE" > $ROOT_DIR/update_quansible.sh
+function upgrade() {
+  echo "cd $ROOT_DIR" > $ROOT_DIR/update_quansible.sh
+  echo "git clone $GITHUB_QUANSIBLE" >> $ROOT_DIR/update_quansible.sh
 }
 
 function install_environment () {
@@ -91,5 +92,5 @@ then
   setup_roles
 else
   echo "usage: $0 <setup-env|update|update-roles>"
- exit
+  exit
 fi
