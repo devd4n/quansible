@@ -89,6 +89,7 @@ elif [[ $1 == "update" ]]
 then
   setup_ansible
   init_ansible
+  install_roles
 else
   echo "usage: $0 <setup|init>"
  exit
