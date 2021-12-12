@@ -40,6 +40,12 @@
       - "{{ root_dir }}/ansible/private/inventory.yml"
       - "{{ root_dir }}/ansible/ansible.cfg"
 
+  - name: Create quansible.cfg if not exists
+    copy:
+      src: "{{ dir_quansible }}/quansible.cfg"
+      dst: "{{ root_dir }}/quansible.cfg"
+      force: no
+
   - name: Set environment variables (ANSIBLE_CONFIG)
     shell: echo "export ANSIBLE_CONFIG={{ root_dir }}/ansible/ansible.cfg" >> /etc/profile.d/ansible_envs.sh
 

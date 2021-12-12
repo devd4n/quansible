@@ -1,15 +1,25 @@
 #!/bin/bash
 
-QUANSIBLE_DIR=$(pwd)
-ROOT_DIR="$(dirname "$QUANSIBLE_DIR")"
+USER_ANSIBLE="ansible_admin"
 
-if test -f "$ROOT_DIR/quansible_config"; then
-    . "$ROOT_DIR/quansible_config"
-    echo "A custom quansible_config exists."
-else
-    . "$QUANSIBLE_DIR/quansible_config"
-    echo "NO custom quansible_config exists."
-fi
+DIR_QUANSIBLE=$(pwd)
+ROOT_DIR="$(dirname "$DIR_QUANSIBLE")"
+DIR_ANSIBLE="$ROOT_DIR/ansible"
+DIR_INVENTORY="$DIR_ANSIBLE/private"
+DIR_ANSIBLE_CFG=$DIR_ANSIBLE
+DIR_ANSIBLE_EXTRA_VARS=$DIR_ANSIBLE
+DIR_ANSIBLE_REQUIREMENTS=$DIR_ANSIBLE
+
+QUANSIBLE_VENV="$ROOT_DIR/venv"
+GITHUB_QUANSIBLE="https://github.com/devd4n/quansible.git"
+ROLES_PATH="$ROOT_DIR/ansible/public/roles"
+
+SCRIPT_DIR=$(pwd)
+ANSIBLE_VERSION="4.0.0"
+
+if test -f "$ROOT_DIR/quansible.cfg"; then
+    echo "load custom quansible.cfg"
+    . "$ROOT_DIR/quansible.cfg"
 
 function setup_ansible () {
   python3 -m venv $QUANSIBLE_VENV
@@ -52,6 +62,7 @@ function install_environment () {
 
   echo "---" > $DIR_ANSIBLE_EXTRA_VARS/ansible_vars.yml
   echo "root_dir: $ROOT_DIR" >> $DIR_ANSIBLE_EXTRA_VARS/ansible_vars.yml
+  echo "dir_quansible: $DIR_QUANSIBLE" >> $DIR_ANSIBLE_EXTRA_VARS/ansible_vars.yml
   echo "user_ansible_admin: $USER_ANSIBLE" >> $DIR_ANSIBLE_EXTRA_VARS/ansible_vars.yml
 
   echo "[defaults]" > $DIR_ANSIBLE/ansible.cfg
