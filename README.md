@@ -38,58 +38,31 @@ in the following Structure ROOT_DIR is replaced by . for Root.
 
 The structure is splitted in two different base directories
 
-### Current structure
-
-`-- (ROOT_DIR)
-    |-- ansible
-    |   |-- ansible.cfg
-    |   |-- ansible_vars.yml
-    |   |-- private
-    |   |   `-- inventory.yml
-    |   |-- public
-    |   |   `-- roles
-    |   |       |-- role-1
-    |   |       `-- role-2
-    |   `-- requirements.yml
-    |-- quansible
-    |   |-- README.md                 x
-    |   |-- quansible-init.yml        x
-    |   |-- quansible.sh              x
-    |   |-- quansible_config          x
-    |   `-- quansible_config.yml      x
-    `-- venv
-        |-- bin
-
-### Final structure
+### Structure
 
 Quansible is seperated in three different subdirectories:
 quansible: contains all configuration changes and the structure of the project.
 ansible: contains the manuall and individual ansible files.
 venv: Python Venv to use for operation
 
-./servicename                 x
-  README.md                   x <--- Here we are ---
-  quansible_update.sh
-  quansible_config               
-  ./quansible                 x
-     quansible.sh             x # Maintain Script
-     quansible-init.yml       x # Maintain Playbook
-     quansible-vars.yml       x
-     quansible_config         x
-  ./ansible       
-    ansible.cfg
-    ansible_vars.yml
-    ./private
-      inventory.yml
-      /playbooks
-          monitoring.yml         # a Playbook to retrieve data of the infrastructure
-          infra.yml       # contains Playbooks that should be run often or to initialize the architecture
-      /secrets
-      /groups
-      /hosts
-    ./public
-        /roles
-  ./venv
+|-- "ROOT_DIR"
+    |-- ansible
+    |   |-- ansible.cfg
+    |   |-- ansible_vars.yml
+    |   |-- private
+    |   |   -- inventory.yml
+    |   |-- public
+    |   |   -- roles
+    |   |       |-- ansible_role_sshd
+    |   |       |-- ansible_role_sshd-agent
+    |   |-- requirements.yml
+    |-- quansible
+    |   |-- README.md
+    |   |-- quansible-init.yml
+    |   |-- quansible.cfg
+    |   -- quansible.sh
+    |-- quansible.cfg
+    |-- venv
 
 ### the private part
 
