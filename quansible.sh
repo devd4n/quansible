@@ -43,8 +43,10 @@ function setup_roles () {
 }
 
 function upgrade() {
-  echo "cd $ROOT_DIR" > $ROOT_DIR/update_quansible.sh
+  echo "#!/bin/bash" > $ROOT_DIR/update_quansible.sh
+  echo "cd $ROOT_DIR" >> $ROOT_DIR/update_quansible.sh
   echo "git clone $GITHUB_QUANSIBLE" >> $ROOT_DIR/update_quansible.sh
+  chmod +x $ROOT_DIR/update_quansible.sh
 }
 
 function install_environment () {
@@ -80,12 +82,16 @@ function install_environment () {
 if [[ $1 == "setup-env" ]]
 then
   install_environment
+  upgrade
 elif [[ $1 == "update" ]]
 then
   setup_ansible
 elif [[ $1 == "update-roles" ]]
 then
   setup_roles
+elif [[ $1 == "upgrade" ]]
+then
+  upgrade
 else
   echo "usage: $0 <setup-env|update|update-roles>"
   exit
