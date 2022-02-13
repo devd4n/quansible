@@ -38,6 +38,7 @@ function setup_ansible () {
 
 function setup_roles () {
   source $QUANSIBLE_VENV/bin/activate
+  cd $DIR_ANSIBLE
   ansible-galaxy install -r "$DIR_ANSIBLE_REQUIREMENTS/requirements.yml"
 }
 
