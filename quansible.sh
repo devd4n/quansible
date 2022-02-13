@@ -50,6 +50,7 @@ function upgrade() {
   echo "cd $ROOT_DIR" >> $ROOT_DIR/update_quansible.sh
   echo "git clone $GITHUB_QUANSIBLE" >> $ROOT_DIR/update_quansible.sh
   mv $ROOT_DIR/quansible.cfg.old $ROOT_DIR/quansible/
+  chmod +x $ROOT_DIR/quansible/quansible.sh
   chmod +x $ROOT_DIR/update_quansible.sh
 }
 
