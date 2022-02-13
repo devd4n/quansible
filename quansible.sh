@@ -43,10 +43,8 @@ function setup_roles () {
 }
 
 function upgrade() {
-  mv $ROOT_DIR/quansible/quansible.cfg $ROOT_DIR/quansible.cfg.old
-  rm -r $ROOT_DIR/quansible
-  rm $ROOT_DIR/quansible/quansible-init.yml
   echo "#!/bin/bash" > $ROOT_DIR/update_quansible.sh
+  echo "rm -r $ROOT_DIR/quansible" >> $ROOT_DIR/update_quansible.sh
   echo "cd $ROOT_DIR" >> $ROOT_DIR/update_quansible.sh
   echo "git clone $GITHUB_QUANSIBLE" >> $ROOT_DIR/update_quansible.sh
   echo "mv $ROOT_DIR/quansible.cfg.old $ROOT_DIR/quansible/" >> $ROOT_DIR/update_quansible.sh
