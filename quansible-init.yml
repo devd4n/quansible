@@ -64,3 +64,10 @@
       path: "{{ root_dir }}/ansible/requirements.yml"
       regexp: '^(.*)$'
       replace: '- src: \1'
+      
+  - name: fix file permissions
+    file: 
+      path: "{{ root_dir }}" 
+      owner: "{{ user_ansible_admin }}"
+      group: ansible_admins
+      recourse: yes
