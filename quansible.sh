@@ -95,6 +95,6 @@ elif [[ $1 == "upgrade" ]]
 then
   upgrade
 else
-  echo "usage: $0 <setup-env|update|update-roles>"
+  echo "usage: $0 <setup-env|update|update-roles|upgrade>"
   exit
 fi
