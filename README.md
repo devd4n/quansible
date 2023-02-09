@@ -48,8 +48,8 @@ venv: Python Venv to use for operation
     |   |   |-- inventory.yml
     |   |-- public
     |   |   |-- roles
-    |   |       |-- ansible_role_sshd
-    |   |       |-- ansible_role_sshd-agent
+    |   |   |   |-- ansible_role_sshd
+    |   |   |   |-- ansible_role_sshd-agent
     |   |-- requirements.yml
     |-- quansible
     |   |-- README.md
