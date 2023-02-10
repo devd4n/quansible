@@ -15,7 +15,7 @@ GITHUB_QUANSIBLE="https://github.com/devd4n/quansible.git"
 ROLES_PATH="$ROOT_DIR/ansible/public/roles"
 
 SCRIPT_DIR=$(pwd)
-ANSIBLE_VERSION="4.0.0"
+ANSIBLE_VERSION="7.2.0"
 
 if test -f "$ROOT_DIR/quansible.cfg"; then
     echo "load custom quansible.cfg"
