@@ -7,7 +7,7 @@ quansible is a tool for creating an ansible structure on an ansible host
 Currently only debian is Supported
 
 ## How to use
-following Steps must be run on the host (as root):
+following Steps 1.-5. must be run on the host (as root or via sudo):
 
 0. Navigate to Path of choice
 1. `apt-get install git`
