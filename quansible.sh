@@ -41,7 +41,8 @@ function setup_ansible () {
 function setup_roles () {
   source $QUANSIBLE_VENV/bin/activate
   cd $DIR_ANSIBLE
-  ansible-galaxy install -r "$DIR_ANSIBLE_REQUIREMENTS/requirements.yml"
+  # Load all Roles from requirements.yml via ansible galaxy => ignore roles which didn't contain a meta/main.yml file.
+  ansible-galaxy install -r "$DIR_ANSIBLE_REQUIREMENTS/requirements.yml" --ignore-errors
 }
 
 function upgrade() {
