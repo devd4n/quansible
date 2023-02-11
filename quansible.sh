@@ -89,9 +89,9 @@ function install_environment () {
 if [[ $1 == "setup-env" ]]
 then
   install_environment
-  su -c "./quansible upgrade" $USER_ANSIBLE
-  su -c "./quansible update" $USER_ANSIBLE
-  su -c "./quansible update-roles" $USER_ANSIBLE
+  su -c "./quansible.sh upgrade" $USER_ANSIBLE
+  su -c "./quansible.sh update" $USER_ANSIBLE
+  su -c "./quansible.sh update-roles" $USER_ANSIBLE
   logout
 elif [[ $1 == "update" ]]
 then
