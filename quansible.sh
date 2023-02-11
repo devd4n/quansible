@@ -52,20 +52,25 @@ function upgrade() {
 }
 
 function install_environment () {
-  apt-get update
+  su root
+  useradd -m $USER_ANSIBLE --shell /bin/bash
+  echo "$USER_ANSIBLE  ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/$USER_ANSIBLE
+  
+  apt update
   # Install system requirements for virtualenv
-  apt-get install sudo python3-pip python3-venv -y
+  sudo apt install sudo python3-pip python3-venv -y
   # https://www.codegrepper.com/code-examples/shell/python+headers+are+missing+in+%2Fusr%2Finclude%2Fpython3.6m+%26quot%3Byum%26quot%3B
   #https://stackoverflow.com/questions/31508612/pip-install-unable-to-find-ffi-h-even-though-it-recognizes-libffi
-  apt-get install python-dev python3-dev libffi-dev -y
+  sudo apt install python-dev python3-dev libffi-dev -y
   # https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=998232
-  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-
+  # curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+  
+  su $USER_ANSIBLE
   python3 -m pip install --upgrade pip
   python3 -m pip install virtualenv
-
+  su root
   mkdir $ROOT_DIR $DIR_ANSIBLE $DIR_INVENTORY "/etc/sudoers.d"
-
+  
   echo "---" > $DIR_ANSIBLE_EXTRA_VARS/ansible_vars.yml
   echo "root_dir: $ROOT_DIR" >> $DIR_ANSIBLE_EXTRA_VARS/ansible_vars.yml
   echo "dir_quansible: $DIR_QUANSIBLE" >> $DIR_ANSIBLE_EXTRA_VARS/ansible_vars.yml
@@ -74,9 +79,7 @@ function install_environment () {
   echo "[defaults]" > $DIR_ANSIBLE/ansible.cfg
   echo "inventory = $DIR_INVENTORY/inventory.yml  ; list of hosts" >> $DIR_ANSIBLE/ansible.cfg
   echo "roles_path = $ROLES_PATH" >> $DIR_ANSIBLE/ansible.cfg
-
-  useradd -m $USER_ANSIBLE --shell /bin/bash
-  echo "$USER_ANSIBLE  ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/$USER_ANSIBLE
+  
   chown -R $USER_ANSIBLE:$USER_ANSIBLE $ROOT_DIR
 }
 
