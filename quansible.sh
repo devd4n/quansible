@@ -84,6 +84,8 @@ function install_environment () {
   sudo echo "roles_path = $ROLES_PATH" >> $DIR_ANSIBLE/ansible.cfg
   
   sudo chown -R $USER_ANSIBLE:$USER_ANSIBLE $ROOT_DIR
+  exec bash -l
+  logout
 }
 
 # Run function defined by parameter of this script (setup | init)
