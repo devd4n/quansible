@@ -23,6 +23,8 @@ if test -f "$ROOT_DIR/quansible.cfg"; then
 fi
 
 function setup_ansible () {
+  python3 -m pip install --upgrade pip
+  python3 -m pip install virtualenv
   python3 -m venv $QUANSIBLE_VENV
   source $QUANSIBLE_VENV/bin/activate
   python3 -m pip install --upgrade pip
@@ -53,10 +55,10 @@ function upgrade() {
 
 function install_environment () {
   sudo useradd -m $USER_ANSIBLE --shell /bin/bash
-  sudo echo "$USER_ANSIBLE  ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/$USER_ANSIBLE
+  sudo echo "$USER_ANSIBLE  ALL=(ALL) NOPASSWD:ALL" >> sudo /etc/sudoers.d/$USER_ANSIBLE
 
-  sudo locale-gen en_GB
   sudo locale-gen en_GB.UTF-8
+  sudo locale-gen en_GB
   sudo update-locale LANG=en_GB.UTF-8
   
   sudo apt update
@@ -67,11 +69,8 @@ function install_environment () {
   sudo apt install python-dev python3-dev libffi-dev -y
   # https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=998232
   # curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
- 
-  python3 -m pip install --upgrade pip
-  python3 -m pip install virtualenv
-  
-  sudo mkdir $ROOT_DIR $DIR_ANSIBLE $DIR_INVENTORY "/etc/sudoers.d"
+
+  sudo mkdir $ROOT_DIR $DIR_ANSIBLE $DIR_INVENTORY
   
   sudo echo "---" > $DIR_ANSIBLE_EXTRA_VARS/ansible_vars.yml
   sudo echo "root_dir: $ROOT_DIR" >> $DIR_ANSIBLE_EXTRA_VARS/ansible_vars.yml
