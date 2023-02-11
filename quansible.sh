@@ -34,7 +34,6 @@ function setup_ansible () {
   INIT_PLAYBOOK=$DIR_QUANSIBLE/quansible-init.yml
   ANSIBLE_CONFIG=$DIR_ANSIBLE_CFG/ansible.cfg
   ansible-playbook --extra-vars $EXTRA_VARS $INIT_PLAYBOOK --ask-become-pass
-  exec bash -l
   logout
 }
 
@@ -92,7 +91,6 @@ then
   install_environment
   su -c "./quansible.sh upgrade" $USER_ANSIBLE
   su -c "./quansible.sh update" $USER_ANSIBLE
-  logout
   su -c "./quansible.sh update-roles" $USER_ANSIBLE
   exit
 elif [[ $1 == "update" ]]
