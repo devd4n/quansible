@@ -33,7 +33,7 @@ function setup_ansible () {
   EXTRA_VARS="@$DIR_ANSIBLE_EXTRA_VARS/ansible_vars.yml"
   INIT_PLAYBOOK=$DIR_QUANSIBLE/quansible-init.yml
   ANSIBLE_CONFIG=$DIR_ANSIBLE_CFG/ansible.cfg
-  ansible-playbook --extra-vars $EXTRA_VARS $INIT_PLAYBOOK
+  ansible-playbook --extra-vars $EXTRA_VARS $INIT_PLAYBOOK --ask-become-pass
   exec bash -l
   logout
 }
@@ -82,16 +82,14 @@ function install_environment () {
   echo "roles_path = $ROLES_PATH" >> $DIR_ANSIBLE/ansible.cfg
   
   chown -R $USER_ANSIBLE:$USER_ANSIBLE $ROOT_DIR
-  exec bash -l
-  logout
 }
 
 # Run function defined by parameter of this script (setup | init)
 if [[ $1 == "setup-env" ]]
 then
   install_environment
-  su -m $USER_ANSIBLE -c upgrade
-  su -m $USER_ANSIBLE -c setup_ansible
+  su -c "./quansible upgrade" $USER_ANSIBLE
+  su -c "./quansible update" $USER_ANSIBLE
 elif [[ $1 == "update" ]]
 then
   setup_ansible
