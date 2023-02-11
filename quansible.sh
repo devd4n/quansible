@@ -94,6 +94,7 @@ then
   su -c "./quansible.sh update" $USER_ANSIBLE
   su -c "./quansible.sh update-roles" $USER_ANSIBLE
   logout
+  exit
 elif [[ $1 == "update" ]]
 then
   setup_ansible
