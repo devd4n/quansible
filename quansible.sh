@@ -90,6 +90,8 @@ then
   install_environment
   su -c "./quansible upgrade" $USER_ANSIBLE
   su -c "./quansible update" $USER_ANSIBLE
+  su -c "./quansible update-roles" $USER_ANSIBLE
+  logout
 elif [[ $1 == "update" ]]
 then
   setup_ansible
