@@ -52,10 +52,9 @@ function upgrade() {
 }
 
 function install_environment () {
-  su root
-  useradd -m $USER_ANSIBLE --shell /bin/bash
-  echo "$USER_ANSIBLE  ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/$USER_ANSIBLE
-  su $USER_ANSIBLE
+  su -c "useradd -m $USER_ANSIBLE --shell /bin/bash"
+  su -c "echo "$USER_ANSIBLE  ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/$USER_ANSIBLE"
+
   sudo locale-gen en_GB
   sudo locale-gen en_GB.UTF-8
   sudo update-locale LANG=en_GB.UTF-8
