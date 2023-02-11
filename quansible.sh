@@ -90,7 +90,8 @@ function install_environment () {
 if [[ $1 == "setup-env" ]]
 then
   install_environment
-  upgrade
+  su -m $USER_ANSIBLE -c upgrade
+  su -m $USER_ANSIBLE -c setup_ansible
 elif [[ $1 == "update" ]]
 then
   setup_ansible
