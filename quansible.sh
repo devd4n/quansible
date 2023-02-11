@@ -54,34 +54,34 @@ function upgrade() {
 }
 
 function install_environment () {
-  sudo useradd -m $USER_ANSIBLE --shell /bin/bash
-  sudo echo "$USER_ANSIBLE  ALL=(ALL) NOPASSWD:ALL" >> sudo /etc/sudoers.d/$USER_ANSIBLE
+  useradd -m $USER_ANSIBLE --shell /bin/bash
+  echo "$USER_ANSIBLE  ALL=(ALL) NOPASSWD:ALL" >> sudo /etc/sudoers.d/$USER_ANSIBLE
 
-  sudo locale-gen en_GB.UTF-8
-  sudo locale-gen en_GB
-  sudo update-locale LANG=en_GB.UTF-8
+  locale-gen en_GB.UTF-8
+  locale-gen en_GB
+  update-locale LANG=en_GB.UTF-8
   
-  sudo apt update
+  apt update
   # Install system requirements for virtualenv
-  sudo apt install sudo python3-pip python3-venv -y
+  apt install sudo python3-pip python3-venv -y
   # https://www.codegrepper.com/code-examples/shell/python+headers+are+missing+in+%2Fusr%2Finclude%2Fpython3.6m+%26quot%3Byum%26quot%3B
   #https://stackoverflow.com/questions/31508612/pip-install-unable-to-find-ffi-h-even-though-it-recognizes-libffi
-  sudo apt install python-dev python3-dev libffi-dev -y
+  apt install python-dev python3-dev libffi-dev -y
   # https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=998232
   # curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
-  sudo mkdir $ROOT_DIR $DIR_ANSIBLE $DIR_INVENTORY
+  mkdir $ROOT_DIR $DIR_ANSIBLE $DIR_INVENTORY
   
-  sudo echo "---" > $DIR_ANSIBLE_EXTRA_VARS/ansible_vars.yml
-  sudo echo "root_dir: $ROOT_DIR" >> $DIR_ANSIBLE_EXTRA_VARS/ansible_vars.yml
-  sudo echo "dir_quansible: $DIR_QUANSIBLE" >> $DIR_ANSIBLE_EXTRA_VARS/ansible_vars.yml
-  sudo echo "user_ansible_admin: $USER_ANSIBLE" >> $DIR_ANSIBLE_EXTRA_VARS/ansible_vars.yml
+  echo "---" > $DIR_ANSIBLE_EXTRA_VARS/ansible_vars.yml
+  echo "root_dir: $ROOT_DIR" >> $DIR_ANSIBLE_EXTRA_VARS/ansible_vars.yml
+  echo "dir_quansible: $DIR_QUANSIBLE" >> $DIR_ANSIBLE_EXTRA_VARS/ansible_vars.yml
+  echo "user_ansible_admin: $USER_ANSIBLE" >> $DIR_ANSIBLE_EXTRA_VARS/ansible_vars.yml
 
-  sudo echo "[defaults]" > $DIR_ANSIBLE/ansible.cfg
-  sudo echo "inventory = $DIR_INVENTORY/inventory.yml  ; list of hosts" >> $DIR_ANSIBLE/ansible.cfg
-  sudo echo "roles_path = $ROLES_PATH" >> $DIR_ANSIBLE/ansible.cfg
+  echo "[defaults]" > $DIR_ANSIBLE/ansible.cfg
+  echo "inventory = $DIR_INVENTORY/inventory.yml  ; list of hosts" >> $DIR_ANSIBLE/ansible.cfg
+  echo "roles_path = $ROLES_PATH" >> $DIR_ANSIBLE/ansible.cfg
   
-  sudo chown -R $USER_ANSIBLE:$USER_ANSIBLE $ROOT_DIR
+  chown -R $USER_ANSIBLE:$USER_ANSIBLE $ROOT_DIR
   exec bash -l
   logout
 }
