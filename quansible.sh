@@ -63,6 +63,7 @@ function install_environment () {
   update-locale LANG=en_GB.UTF-8
   
   apt update
+  apt install sudo curl -y
   # Install system requirements for virtualenv
   apt install sudo python3-pip python3-venv -y
   # https://www.codegrepper.com/code-examples/shell/python+headers+are+missing+in+%2Fusr%2Finclude%2Fpython3.6m+%26quot%3Byum%26quot%3B
