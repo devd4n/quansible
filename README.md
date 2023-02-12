@@ -18,6 +18,7 @@ following Steps 1.-5. must be run with sudo rights
 0. Navigate to Path of choice
 1. `sudo apt-get install git`
 2. `sudo git clone https://github.com/devd4n/quansible.git`
+    - too get development Branch: git clone -b dev https://github.com/devd4n/quansible.git
 3. `sudo cd quansible`
 4. `sudo chmod +x quansible.sh`
 5. `sudo ./quansible.sh setup-env`
