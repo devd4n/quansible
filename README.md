@@ -4,20 +4,31 @@
 quansible is a tool for creating an ansible structure on an ansible host
 
 ## Supported OSes
-Currently only debian is Supported
+Currently only debian (debian, ubuntu) like systems are supported
 
-## How to use
-following Steps 1.-5. must be run on the host (as root or via sudo):
+## Preperation
+A User with sudo rights is required
+
+1. (root)# apt install sudo
+2. usermod -aG sudo <<user>>
+
+## How to setup
+following Steps 1.-5. must be run with sudo rights
 
 0. Navigate to Path of choice
-1. `apt-get install git`
-2. `git clone https://github.com/devd4n/quansible.git`
-3. `cd quansible`
-4. `chmod +x quansible.sh`
-5. `./quansible.sh setup-env`
+1. `sudo apt-get install git`
+2. `sudo git clone https://github.com/devd4n/quansible.git`
+3. `sudo cd quansible`
+4. `sudo chmod +x quansible.sh`
+5. `sudo ./quansible.sh setup-env`
 6. `su ansible_admin`
-7. `. ./quansible.sh update`
-8. `./quansible.sh update-roles`
+
+
+## How to use
+0. Navigate to venv/bin/
+1. ./activate
+2. Navigate to private/playbooks
+
 
 ## Update Quansible
 remove and rebuilding the ./quansible directory (quansible.cfg is excluded)
@@ -45,7 +56,10 @@ venv: Python Venv to use for operation
     |   |-- private
     |   |   |-- ansible.cfg
     |   |   |-- ansible_vars.yml
-    |   |   |-- inventory.yml
+    |   |   |-- inventory
+    |   |   |   |-- inventory.yml
+    |   |   |   |-- host_vars
+    |   |   |-- playbooks
     |   |-- public
     |   |   |-- roles
     |   |   |   |-- ansible_role_sshd
@@ -56,7 +70,6 @@ venv: Python Venv to use for operation
     |   |-- quansible-init.yml
     |   |-- quansible.cfg
     |   |-- quansible.sh
-    |-- quansible.cfg
     |-- venv
 ```
 
@@ -69,8 +82,8 @@ Possible Structure:
 ./private
 ./private/secrets
 ./private/playbooks
-./private/hosts
-./private/groups
+./private/host_vars
+./private/group_vars
 ```
 but other structures are also possible.
 Recommendations are under development.
@@ -85,6 +98,7 @@ roles are defined by variables and hosts given in the playbook so they are not c
 ## Import roles
 
 The init script imports all roles defined by the requirments.txt file via the ansible-galaxy functionality.
+The roles have to be created with "ansible-galaxy init" command. (see "Create own roles and create a github repo")
 <br>It can also be triggered after editing requirements.txt by
 `./quansible.sh update-roles`
 the initial requirements file contains all Roles which are created or used by the owner of this repository.
@@ -99,7 +113,7 @@ USER_ANSIBLE="ansible_admin"
 DIR_QUANSIBLE=$(pwd)
 ROOT_DIR="$(dirname "$DIR_QUANSIBLE")"
 DIR_ANSIBLE="$ROOT_DIR/ansible"
-DIR_INVENTORY="$DIR_ANSIBLE/private"
+DIR_INVENTORY="$DIR_ANSIBLE/private/inventory"
 DIR_ANSIBLE_CFG=$DIR_ANSIBLE
 DIR_ANSIBLE_EXTRA_VARS=$DIR_ANSIBLE
 DIR_ANSIBLE_REQUIREMENTS=$DIR_ANSIBLE
@@ -109,11 +123,12 @@ GITHUB_QUANSIBLE="https://github.com/devd4n/quansible.git"
 ROLES_PATH="$ROOT_DIR/ansible/public/roles"
 
 SCRIPT_DIR=$(pwd)
-ANSIBLE_VERSION="4.0.0"
+ANSIBLE_VERSION="7.2.0"
 
 ## Backup
-the following files/directories should be backed up:
-- ansible
+as long as now backup and restore routine is developed the following files/directories should be backed up:
+- private
+- requirements.yml
 - quansible.cfg
 
 ## Create own roles and create a github repo
