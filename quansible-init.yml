@@ -29,7 +29,7 @@
       mode    : "0775"
     with_items:
     - "{{ root_dir }}"
-    - "{{ DIR_ANSIBLE }}/private"
+    - "{{ dir_ansible }}/private"
     - "{{ dir_inventory }}"
     - "{{ roles_path }}"
 
@@ -39,7 +39,7 @@
       path: "{{ item }}"
     with_items:
       - "{{ dir_inventory }}/inventory.yml"
-      - "{{ DIR_ANSIBLE }}/ansible.cfg"
+      - "{{ dir_ansible }}/ansible.cfg"
 
   - name: Create quansible.cfg if not exists
     copy:
@@ -62,7 +62,7 @@
 
   - name: write Ansible Roles to requirements.yml
     replace:
-      path: "{{ DIR_ANSIBLE }}/requirements.yml"
+      path: "{{ dir_ansible }}/requirements.yml"
       regexp: '^(.*)$'
       replace: '- src: \1'
       
