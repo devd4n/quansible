@@ -29,21 +29,22 @@
       mode    : "0775"
     with_items:
     - "{{ root_dir }}"
-    - "{{ root_dir }}/ansible/private"
-    - "{{ root_dir }}/ansible/public/roles"
+    - "{{ DIR_ANSIBLE }}/private"
+    - "{{ dir_inventory }}"
+    - "{{ roles_path }}"
 
   - name: Create Files that actually not exists
     file:
       state: touch
       path: "{{ item }}"
     with_items:
-      - "{{ root_dir }}/ansible/private/inventory.yml"
-      - "{{ root_dir }}/ansible/ansible.cfg"
+      - "{{ dir_inventory }}/inventory.yml"
+      - "{{ DIR_ANSIBLE }}/ansible.cfg"
 
   - name: Create quansible.cfg if not exists
     copy:
-      src: "{{ dir_quansible }}/quansible.cfg"
-      dest: "{{ root_dir }}/quansible.cfg"
+      src: "{{ dir_quansible }}/default_quansible.cfg"
+      dest: "{{ dir_quansible }}/quansible.cfg"
       force: no
 
   - name: Set environment variables (ANSIBLE_CONFIG)
@@ -57,11 +58,11 @@
     register: result
 
   - name: Parse Ansible Roles
-    local_action: copy content={{result.stdout}} dest={{ root_dir }}/ansible/requirements.yml
+    local_action: copy content={{result.stdout}} dest={{ DIR_ANSIBLE }}/requirements.yml
 
   - name: write Ansible Roles to requirements.yml
     replace:
-      path: "{{ root_dir }}/ansible/requirements.yml"
+      path: "{{ DIR_ANSIBLE }}/requirements.yml"
       regexp: '^(.*)$'
       replace: '- src: \1'
       
