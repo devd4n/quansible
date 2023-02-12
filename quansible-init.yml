@@ -48,7 +48,7 @@
       force: no
 
   - name: Set environment variables (ANSIBLE_CONFIG)
-    shell: echo "export ANSIBLE_CONFIG={{ root_dir }}/ansible/ansible.cfg" >> /etc/profile.d/ansible_envs.sh
+    shell: echo "export ANSIBLE_CONFIG={{ dir_ansible }}/ansible.cfg" >> /etc/profile.d/ansible_envs.sh
 
   - name: Set environment variables (A)
     shell: echo "export A={{ root_dir }}/ansible/" >> /etc/profile.d/ansible_envs.sh
@@ -58,7 +58,7 @@
     register: result
 
   - name: Parse Ansible Roles
-    local_action: copy content={{result.stdout}} dest={{ DIR_ANSIBLE }}/requirements.yml
+    local_action: copy content={{result.stdout}} dest={{ dir_ansible }}/requirements.yml
 
   - name: write Ansible Roles to requirements.yml
     replace:
