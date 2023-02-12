@@ -76,6 +76,7 @@ function install_environment () {
   echo "---" > $DIR_ANSIBLE_EXTRA_VARS/ansible_vars.yml
   echo "root_dir: $ROOT_DIR" >> $DIR_ANSIBLE_EXTRA_VARS/ansible_vars.yml
   echo "dir_quansible: $DIR_QUANSIBLE" >> $DIR_ANSIBLE_EXTRA_VARS/ansible_vars.yml
+  echo "dir_ansible: $DIR_ANSIBLE" >> $DIR_ANSIBLE_EXTRA_VARS/ansible_vars.yml
   echo "user_ansible_admin: $USER_ANSIBLE" >> $DIR_ANSIBLE_EXTRA_VARS/ansible_vars.yml
 
   echo "[defaults]" > $DIR_ANSIBLE/ansible.cfg
