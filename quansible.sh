@@ -26,6 +26,19 @@ function setup_ansible () {
   python3 -m pip install --upgrade pip
   python3 -m pip install virtualenv
   python3 -m venv $QUANSIBLE_VENV
+   
+  mkdir --parents $ROOT_DIR $DIR_ANSIBLE $DIR_INVENTORY $DIR_ANSIBLE_EXTRA_VARS
+  
+  echo "---" > $DIR_ANSIBLE_EXTRA_VARS/ansible_vars.yml
+  echo "root_dir: $ROOT_DIR" >> $DIR_ANSIBLE_EXTRA_VARS/ansible_vars.yml
+  echo "dir_quansible: $DIR_QUANSIBLE" >> $DIR_ANSIBLE_EXTRA_VARS/ansible_vars.yml
+  echo "dir_ansible: $DIR_ANSIBLE" >> $DIR_ANSIBLE_EXTRA_VARS/ansible_vars.yml
+  echo "dir_inventory: $DIR_INVENTORY" >> $DIR_ANSIBLE_EXTRA_VARS/ansible_vars.yml
+  echo "user_ansible_admin: $USER_ANSIBLE" >> $DIR_ANSIBLE_EXTRA_VARS/ansible_vars.yml
+
+  echo "[defaults]" > $DIR_ANSIBLE/ansible.cfg
+  echo "inventory = $DIR_INVENTORY  ; list of hosts" >> $DIR_ANSIBLE/ansible.cfg
+  echo "roles_path = $ROLES_PATH" >> $DIR_ANSIBLE/ansible.cfg
   source $QUANSIBLE_VENV/bin/activate
   python3 -m pip install --upgrade pip
   python3 -m pip install wheel
@@ -70,18 +83,6 @@ function install_environment () {
   apt install python-dev python3-dev libffi-dev -y
   # https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=998232
   # curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-
-  mkdir --parents $ROOT_DIR $DIR_ANSIBLE $DIR_INVENTORY $DIR_ANSIBLE_EXTRA_VARS
-  
-  echo "---" > $DIR_ANSIBLE_EXTRA_VARS/ansible_vars.yml
-  echo "root_dir: $ROOT_DIR" >> $DIR_ANSIBLE_EXTRA_VARS/ansible_vars.yml
-  echo "dir_quansible: $DIR_QUANSIBLE" >> $DIR_ANSIBLE_EXTRA_VARS/ansible_vars.yml
-  echo "dir_ansible: $DIR_ANSIBLE" >> $DIR_ANSIBLE_EXTRA_VARS/ansible_vars.yml
-  echo "user_ansible_admin: $USER_ANSIBLE" >> $DIR_ANSIBLE_EXTRA_VARS/ansible_vars.yml
-
-  echo "[defaults]" > $DIR_ANSIBLE/ansible.cfg
-  echo "inventory = $DIR_INVENTORY/inventory.yml  ; list of hosts" >> $DIR_ANSIBLE/ansible.cfg
-  echo "roles_path = $ROLES_PATH" >> $DIR_ANSIBLE/ansible.cfg
   
   chown -R $USER_ANSIBLE:$USER_ANSIBLE $ROOT_DIR
 }
