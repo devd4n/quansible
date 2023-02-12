@@ -30,7 +30,9 @@
     with_items:
     - "{{ root_dir }}"
     - "{{ dir_ansible }}/private"
+    - "{{ dir_ansible }}/private/playbooks"
     - "{{ dir_inventory }}"
+    - "{{ dir_inventory }}/host_vars"
     - "{{ roles_path }}"
 
   - name: Create Files that actually not exists
