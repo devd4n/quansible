@@ -71,7 +71,7 @@ function install_environment () {
   # https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=998232
   # curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
-  mkdir $ROOT_DIR $DIR_ANSIBLE $DIR_INVENTORY
+  mkdir --parents $ROOT_DIR $DIR_ANSIBLE $DIR_INVENTORY $DIR_ANSIBLE_EXTRA_VARS
   
   echo "---" > $DIR_ANSIBLE_EXTRA_VARS/ansible_vars.yml
   echo "root_dir: $ROOT_DIR" >> $DIR_ANSIBLE_EXTRA_VARS/ansible_vars.yml
