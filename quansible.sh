@@ -17,9 +17,9 @@ ROLES_PATH="$ROOT_DIR/ansible/public/roles"
 SCRIPT_DIR=$(pwd)
 ANSIBLE_VERSION="7.2.0"
 
-if test -f "$ROOT_DIR/quansible.cfg"; then
+if test -f "{{ DIR_QUANSIBLE }}/quansible.cfg"; then
     echo "load custom quansible.cfg"
-    . "$ROOT_DIR/quansible.cfg"
+    . "{{ DIR_QUANSIBLE }}//quansible.cfg"
 fi
 
 function setup_ansible () {
