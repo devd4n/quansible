@@ -6,7 +6,7 @@ DIR_QUANSIBLE=$(pwd)
 ROOT_DIR="$(dirname "$DIR_QUANSIBLE")"
 DIR_ANSIBLE="$ROOT_DIR/ansible"
 DIR_INVENTORY="$DIR_ANSIBLE/private/inventory"
-DIR_ANSIBLE_CFG="$DIR_ANSIBLE/private"https://github.com/devd4n/quansible/blob/main/quansible.sh
+DIR_ANSIBLE_CFG="$DIR_ANSIBLE/private"
 DIR_ANSIBLE_EXTRA_VARS="$DIR_ANSIBLE/private"
 DIR_ANSIBLE_REQUIREMENTS=$DIR_ANSIBLE
 
