@@ -71,9 +71,9 @@ function install_environment () {
   useradd -m $USER_ANSIBLE --shell /bin/bash
   echo "$USER_ANSIBLE  ALL=(ALL) NOPASSWD:ALL" >> sudo /etc/sudoers.d/$USER_ANSIBLE
 
-  locale-gen en_GB.UTF-8
-  locale-gen en_GB
-  update-locale LANG=en_GB.UTF-8
+  locale-gen de_DE.UTF-8
+  locale-gen de_DE
+  update-locale LANG=de_DE.UTF-8
   
   apt update
   apt install sudo curl -y
