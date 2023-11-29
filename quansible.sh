@@ -60,7 +60,7 @@ function setup_roles () {
 
 function upgrade() {
   echo "#!/bin/bash" > $ROOT_DIR/update_quansible.sh
-  echo "cd $ROOT_DIR" >> $ROOT_DIR/update_quansible.sh
+  echo "cd $DIR_QUANSIBLE" >> $ROOT_DIR/update_quansible.sh
   echo "git reset --hard origin/main" >> $ROOT_DIR/update_quansible.sh
   echo "chmod +x $ROOT_DIR/quansible/quansible.sh" >> $ROOT_DIR/update_quansible.sh
   chmod +x $ROOT_DIR/update_quansible.sh
