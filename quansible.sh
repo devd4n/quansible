@@ -19,7 +19,7 @@ ANSIBLE_VERSION="7.2.0"
 
 if test -f "$DIR_QUANSIBLE/quansible.cfg"; then
     echo "load custom quansible.cfg"
-    . "$DIR_QUANSIBLE/quansible.cfg"
+    . $DIR_QUANSIBLE/quansible.cfg
 fi
 
 function setup_ansible () {
