@@ -21,9 +21,9 @@ function install_environment () {
   echo "$USER_ANSIBLE  ALL=(ALL) NOPASSWD:ALL" >> sudo /etc/sudoers.d/$USER_ANSIBLE
   
   # ansible needs a UTF-8 locale
-  locale-gen en_GB.UTF-8
-  #locale-gen en_GB
-  update-locale LANG=en_GB.UTF-8
+  locale-gen de_DE.UTF-8
+  locale-gen de_DE
+  update-locale LANG=de_DE.UTF-8
   
   apt update
   # Install system requirements and apps for virtualenv
