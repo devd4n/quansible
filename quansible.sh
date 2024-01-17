@@ -11,7 +11,7 @@ then
   echo "load default quansible.cfg"
     . "$DIR_QUANSIBLE/default_quansible.cfg"
 else
-  echo "ERROR: something went wrong: no quansible.cfg file found"
+  echo "ERROR: something went wrong: no quansible.cfg | default_quansible.cfg file found"
   exit
 fi
 
