@@ -85,7 +85,7 @@ EOF
   INIT_PLAYBOOK=$DIR_QUANSIBLE/quansible-init.yml
   ANSIBLE_CONFIG=$DIR_ANSIBLE_CFG/ansible.cfg
   cd $DIR_ANSIBLE
-  ansible-playbook --extra-vars $EXTRA_VARS $INIT_PLAYBOOK --ask-become-pass
+  ansible-playbook --extra-vars $EXTRA_VARS $INIT_PLAYBOOK # shouldn't be needed "--ask-become-pass"
   #deactivate
   logout
 }
