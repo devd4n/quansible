@@ -73,7 +73,7 @@ EOF
   source $QUANSIBLE_VENV/bin/activate
   python3 -m pip install --upgrade pip
   python3 -m pip install wheel
-  if [ $ANSIBLE_VERSION == "" ]
+  if [ $ANSIBLE_VERSION = "" ]
   then
     python3 -m pip install ansible
   else
