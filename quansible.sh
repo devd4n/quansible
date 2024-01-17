@@ -37,17 +37,17 @@ function install_environment () {
   #curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
   
   # give full ownership to the ansible user
-  chown -R $USER_ANSIBLE:$USER_ANSIBLE $ROOT_DIR
+  chown -R $USER_ANSIBLE:$USER_ANSIBLE $DIR_LIVE
 }
 
 # update quansible environment
 function update_ansible () {
   # create necessary folders
-  mkdir --parents $ROOT_DIR $DIR_ANSIBLE $DIR_INVENTORY $DIR_ANSIBLE_EXTRA_VARS
+  mkdir --parents $DIR_LIVE $DIR_ANSIBLE $DIR_INVENTORY $DIR_ANSIBLE_EXTRA_VARS
   
   # write variables to file
   cat <<-EOF > $DIR_ANSIBLE_EXTRA_VARS/ansible_vars.yml
-  root_dir: $ROOT_DIR
+  root_dir: $DIR_LIVE
   dir_quansible: $DIR_QUANSIBLE
   dir_ansible: $DIR_ANSIBLE
   dir_inventory: $DIR_INVENTORY
@@ -92,14 +92,14 @@ EOF
 
 # creates the update_quansible.sh script
 function upgrade() {
-  cat <<-EOF > $ROOT_DIR/update_quansible.sh
+  cat <<-EOF > $DIR_LIVE/update_quansible.sh
   #!/bin/bash
-  rm -r $ROOT_DIR/quansible
-  cd $ROOT_DIR
+  rm -r $DIR_LIVE/quansible
+  cd $DIR_LIVE
   git clone $GITHUB_QUANSIBLE
-  chmod +x $ROOT_DIR/quansible/quansible.sh
+  chmod +x $DIR_LIVE/quansible/quansible.sh
 EOF
-  chmod +x $ROOT_DIR/update_quansible.sh
+  chmod +x $DIR_LIVE/update_quansible.sh
 }
 
 # Load all Roles from requirements.yml via ansible galaxy
@@ -108,6 +108,14 @@ function load_roles () {
   source $QUANSIBLE_VENV/bin/activate
   cd $DIR_ANSIBLE
   ansible-galaxy install -r "$DIR_ANSIBLE_REQUIREMENTS/requirements.yml" --ignore-errors
+}
+
+function fetch_public () {
+  
+}
+
+function fetch_private () {
+  
 }
 
 # Run function defined by parameter of this script (setup | init)
