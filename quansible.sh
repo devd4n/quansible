@@ -111,11 +111,11 @@ function load_roles () {
 }
 
 function fetch_public () {
-  
+  exit
 }
 
 function fetch_private () {
-  
+  exit
 }
 
 # Run function defined by parameter of this script (setup | init)
