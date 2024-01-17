@@ -32,7 +32,7 @@ function install_environment () {
   apt install curl sudo python3-pip python3-venv -y
   # https://www.codegrepper.com/code-examples/shell/python+headers+are+missing+in+%2Fusr%2Finclude%2Fpython3.6m+%26quot%3Byum%26quot%3B
   # https://stackoverflow.com/questions/31508612/pip-install-unable-to-find-ffi-h-even-though-it-recognizes-libffi
-  apt install python-dev python3-dev libffi-dev -y
+  apt install python3-dev libffi-dev -y
   # https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=998232
   #curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
   
