@@ -23,7 +23,7 @@ function install_environment () {
   mkdir --parents $DIR_LIVE
 
   useradd -m $USER_ANSIBLE --shell /bin/bash
-  echo "$USER_ANSIBLE  ALL=(ALL) NOPASSWD:ALL" >> sudo /etc/sudoers.d/$USER_ANSIBLE
+  echo "$USER_ANSIBLE  ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/$USER_ANSIBLE
   
   # ansible needs a UTF-8 locale
   locale-gen de_DE.UTF-8
