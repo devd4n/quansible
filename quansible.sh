@@ -1,15 +1,15 @@
 #!/bin/bash
 
-if [[ test -f "{{ DIR_QUANSIBLE }}/quansible.cfg" ]]
+if [[ test -f "$DIR_QUANSIBLE/quansible.cfg" ]]
 then
   # override default variables if custom config exists
   echo "load custom quansible.cfg"
-  . "{{ DIR_QUANSIBLE }}/quansible.cfg"
-elif [[ test -f "{{ DIR_QUANSIBLE }}/default_quansible.cfg" ]]
+  . "$DIR_QUANSIBLE/quansible.cfg"
+elif [[ test -f "$DIR_QUANSIBLE/default_quansible.cfg" ]]
 then
   # if no custom config exits use default config file
   echo "load default quansible.cfg"
-    . "{{ DIR_QUANSIBLE }}/default_quansible.cfg"
+    . "$DIR_QUANSIBLE/default_quansible.cfg"
 else
   echo "ERROR: something went wrong: no quansible.cfg file found"
   exit
@@ -45,22 +45,22 @@ function update_ansible () {
   
   # write variables to file
   cat <<-EOF > $DIR_ANSIBLE_EXTRA_VARS/ansible_vars.yml
-  root_dir: ${ROOT_DIR}
-  dir_quansible: ${DIR_QUANSIBLE}
+  root_dir: $ROOT_DIR
+  dir_quansible: $DIR_QUANSIBLE
   dir_ansible: $DIR_ANSIBLE
   dir_inventory: $DIR_INVENTORY
   roles_repo: $POLES_REPO
   roles_path: $ROLES_PATH
   roles_repo_search: $ROLES_REPO_SEARCH
   user_ansible_admin: $USER_ANSIBLE
-  EOF
+EOF
 
   # write variables to ansible.cfg
   cat <<-EOF > $DIR_ANSIBLE/ansible.cfg
   [defaults]
   inventory = $DIR_INVENTORY
   roles_path = $ROLES_PATH
-  EOF
+EOF
 
   # update user pip and initiate venv
   python3 -m pip install --upgrade pip
@@ -91,7 +91,7 @@ function upgrade() {
   cd $ROOT_DIR
   git clone $GITHUB_QUANSIBLE
   chmod +x $ROOT_DIR/quansible/quansible.sh
-  EOF
+EOF
   chmod +x $ROOT_DIR/update_quansible.sh
 }
 
