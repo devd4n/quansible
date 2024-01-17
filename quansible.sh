@@ -73,7 +73,12 @@ EOF
   source $QUANSIBLE_VENV/bin/activate
   python3 -m pip install --upgrade pip
   python3 -m pip install wheel
-  python3 -m pip install ansible==$ANSIBLE_VERSION
+  if [ $ANSIBLE_VERSION == "" ]
+  then
+    python3 -m pip install ansible
+  else
+    python3 -m pip install ansible==$ANSIBLE_VERSION
+  fi
 
   # run init playbook
   EXTRA_VARS="@$DIR_ANSIBLE_EXTRA_VARS/ansible_vars.yml"
