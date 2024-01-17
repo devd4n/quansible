@@ -1,11 +1,11 @@
 #!/bin/bash
 
-if [[ test -f "$DIR_QUANSIBLE/quansible.cfg" ]]
+if [ test -f "$DIR_QUANSIBLE/quansible.cfg" ]
 then
   # override default variables if custom config exists
   echo "load custom quansible.cfg"
   . "$DIR_QUANSIBLE/quansible.cfg"
-elif [[ test -f "$DIR_QUANSIBLE/default_quansible.cfg" ]]
+elif [ test -f "$DIR_QUANSIBLE/default_quansible.cfg" ]
 then
   # if no custom config exits use default config file
   echo "load default quansible.cfg"
