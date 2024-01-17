@@ -1,5 +1,7 @@
 #!/bin/bash
 
+DIR_QUANSIBLE=$(pwd)
+
 if [ -r "$DIR_QUANSIBLE/quansible.cfg" ]
 then
   # override default variables if custom config exists
