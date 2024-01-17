@@ -19,6 +19,9 @@ fi
 
 # install necessary dependencies and set system permissions
 function install_environment () {
+  # create necessary folders
+  mkdir --parents $DIR_LIVE
+
   useradd -m $USER_ANSIBLE --shell /bin/bash
   echo "$USER_ANSIBLE  ALL=(ALL) NOPASSWD:ALL" >> sudo /etc/sudoers.d/$USER_ANSIBLE
   
