@@ -40,38 +40,50 @@ remove and rebuilding the ./quansible directory (quansible.cfg is excluded)
 
 ## Why
 This quansible Tool is a tool to simply start with an ansible environment without the need of a tutorial.
+it consists of two parts to enable development/maintenance ( inside DIR_LOCAL) on one side and on the other side
+pulls data from a remote source (or a location in DIR_LOCAL) that can be used to run playbooks.
 
 ## Structure
 ROOT_DIR can be defined in the quansible_setup.sh script.
 the ROOT_DIR is the project folder where all data of the quansible environment lifes.
 in the following Structure ROOT_DIR is replaced by . for Root.
 
-Quansible is seperated in three different subdirectories:
+inside the ROOT_DIR quansible creates two directories:
+
+DIR_LIVE
+This directory loads the private part and the roles from the DIR_LOCAL or a external source (configuration dependend)
+
+DIR_LOCAL
+This directory should be used to develop/maintain the private part of the DIR_LIVE. And also to develop Roles.
+
+Quansible LIVE DIR is seperated in three different subdirectories:
 quansible: contains all configuration changes and the structure of the project.
 ansible: contains the manuall and individual ansible files.
 venv: Python Venv to use for operation
 
 ```
 |-- "ROOT_DIR"
-    |-- ansible
-    |   |-- private
-    |   |   |-- ansible.cfg
-    |   |   |-- ansible_vars.yml
-    |   |   |-- inventory
-    |   |   |   |-- inventory.yml
-    |   |   |   |-- host_vars
-    |   |   |-- playbooks
-    |   |-- public
-    |   |   |-- roles
-    |   |   |   |-- ansible_role_sshd
-    |   |   |   |-- ansible_role_sshd-agent
-    |   |-- requirements.yml
-    |-- quansible
-    |   |-- README.md
-    |   |-- quansible-init.yml
-    |   |-- quansible.cfg
-    |   |-- quansible.sh
-    |-- venv
+    |-- DIR_LIVE
+        |-- ansible
+        |   |-- private
+        |   |   |-- ansible.cfg
+        |   |   |-- ansible_vars.yml
+        |   |   |-- inventory
+        |   |   |   |-- inventory.yml
+        |   |   |   |-- host_vars
+        |   |   |-- playbooks
+        |   |-- public
+        |   |   |-- roles
+        |   |   |   |-- ansible_role_sshd
+        |   |   |   |-- ansible_role_sshd-agent
+        |   |-- requirements.yml
+        |-- quansible
+        |   |-- README.md
+        |   |-- quansible-init.yml
+        |   |-- quansible.cfg
+        |   |-- quansible.sh
+        |-- venv
+    |-- DIR_LOCAL
 ```
 
 #### The private part
@@ -126,6 +138,8 @@ ROLES_PATH="$ROOT_DIR/ansible/public/roles"
 SCRIPT_DIR=$(pwd)
 ANSIBLE_VERSION="7.2.0"
 
+After changing variables in live environment the function "./quansible.sh reload-config" should be called.
+
 ## Backup
 as long as now backup and restore routine is developed the following files/directories should be backed up:
 - private
@@ -143,3 +157,16 @@ git remote add origin <Git Repo Url>
 git remote -v
 git push origin main
 ```
+
+# TODOs-Bugs
+
+TODOs:
+- split quansible-init.yml playbook into playbook or scripts
+    - one setup
+    - one to load roles
+    - one to load or rsync private
+- create function to setup Cronjob each 10sec update roles and private - https://stackoverflow.com/questions/30295868/how-to-setup-cron-job-to-run-every-10-seconds-in-linux
+
+- Test on Docker
+- Test on VM
+- Push to main
