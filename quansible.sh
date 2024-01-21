@@ -88,6 +88,8 @@ EOF
 
   # add start directory to bashrc
   echo "cd /srv" >> /home/$USER_ANSIBLE/.bashrc
+  echo "source $DIR_LIVE/venv/bin/activate"
+
   # run init playbook
   EXTRA_VARS="@$DIR_ANSIBLE_EXTRA_VARS/ansible_vars.yml"
   INIT_PLAYBOOK=$DIR_QUANSIBLE/quansible-init.yml
