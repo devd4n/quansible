@@ -118,7 +118,7 @@ function fetch_public () {
   # EXAMPLE INPUT2: [ "git", "https://api.github.com/users/devd4n/repos", "ansible_role"]
   if [ ${SRC_ROLES[0]} == "local" ]
   then
-    rsync ${SRC_ROLES[1]} $DIR_LIVE_PUBLIC
+    rsync "${SRC_ROLES[1]}/" $DIR_LIVE_PUBLIC
   elif [ ${SRC_ROLES[0]} == "git" ]
   then
     #  tasks:
@@ -137,10 +137,10 @@ function fetch_public () {
 
 function fetch_private () {
   # EXAMPLE INPUT: SRC_PRIV=( "local" "$DIR_LOCAL/private" 
-  if [ ${SRC_ROLES[0]} == "local" ]
+  if [ ${SRC_PRIV[0]} == "local" ]
   then
-    rsync ${SRC_PRIV[1]} $DIR_LOCAL_PRIVATE
-  elif [ ${SRC_ROLES[0]} == "git" ]
+    rsync "${SRC_PRIV[1]}/" $DIR_LOCAL_PRIVATE
+  elif [ ${SRC_PRIV[0]} == "git" ]
   then
     echo "fetch_private from git is currently under development. Please use local!"
     exit
@@ -164,13 +164,14 @@ function setup_cronjob () {
   # https://stackoverflow.com/questions/610839/how-can-i-programmatically-create-a-new-cron-job/610860#610860
   # Cron only runs every one minute to start the job each 10sec 6 jobs are started with different sleep times
   # retrieved from: https://stackoverflow.com/questions/30295868/how-to-setup-cron-job-to-run-every-10-seconds-in-linux
-  echo "* * * * * $USER_ANSIBLE ( $this_script fetch >> /var/log/cron_quansible.log 2>&1 )" | sudo tee /etc/cron.d/quansible_cron
-  echo "* * * * * $USER_ANSIBLE ( sleep 10 ; $this_script fetch >> /var/log/cron_quansible.log 2>&1 )" | sudo tee -a /etc/cron.d/quansible_cron
-  echo "* * * * * $USER_ANSIBLE ( sleep 20 ; $this_script fetch >> /var/log/cron_quansible.log 2>&1 )" | sudo tee -a /etc/cron.d/quansible_cron
-  echo "* * * * * $USER_ANSIBLE ( sleep 30 ; $this_script fetch >> /var/log/cron_quansible.log 2>&1 )" | sudo tee -a /etc/cron.d/quansible_cron 
-  echo "* * * * * $USER_ANSIBLE ( sleep 40 ; $this_script fetch >> /var/log/cron_quansible.log 2>&1 )" | sudo tee -a /etc/cron.d/quansible_cron 
-  echo "* * * * * $USER_ANSIBLE ( sleep 50 ; $this_script fetch >> /var/log/cron_quansible.log 2>&1 )" | sudo tee -a /etc/cron.d/quansible_cron 
-  crontab /etc/cron.d/quansible_cron >> /var/log/cron_quansible.log 2>&1 
+  echo "* * * * * $USER_ANSIBLE cd $DIR_QUANSIBLE && ./quansible.sh fetch 2>&1 | tee -a /srv/quansible/quansible.log 2>&1" | sudo tee /etc/cron.d/quansible_cron
+  #echo "* * * * * $USER_ANSIBLE ( sleep 10 ; $this_script fetch >> /var/log/cron_quansible.log 2>&1 )" | sudo tee -a /etc/cron.d/quansible_cron
+  #echo "* * * * * $USER_ANSIBLE ( sleep 20 ; $this_script fetch >> /var/log/cron_quansible.log 2>&1 )" | sudo tee -a /etc/cron.d/quansible_cron
+  #echo "* * * * * $USER_ANSIBLE ( sleep 30 ; $this_script fetch >> /var/log/cron_quansible.log 2>&1 )" | sudo tee -a /etc/cron.d/quansible_cron 
+  #echo "* * * * * $USER_ANSIBLE ( sleep 40 ; $this_script fetch >> /var/log/cron_quansible.log 2>&1 )" | sudo tee -a /etc/cron.d/quansible_cron 
+  #echo "* * * * * $USER_ANSIBLE ( sleep 50 ; $this_script fetch >> /var/log/cron_quansible.log 2>&1 )" | sudo tee -a /etc/cron.d/quansible_cron 
+  crontab /etc/cron.d/quansible_cron >> /var/log/cron_quansible.log 2>&1
+  service cron start 
 }
 
 # Run function defined by parameter of this script (setup | init)
@@ -190,8 +191,9 @@ then
   setup_cronjob
 elif [[ $1 == "fetch" ]]
 then
-  fetch public
-  fetch private
+  echo "fetch" >> /srv/quansible/quansible.log
+  fetch_public
+  fetch_private
 elif [[ $1 == "update-roles" ]]
 then
   load_roles
