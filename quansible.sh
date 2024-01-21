@@ -185,7 +185,7 @@ then
 elif [[ $1 == "update" ]]
 then
   update_ansible
-elif [[ setup_cronjob ]]
+elif [[ $1 == "setup_cronjob" ]]
 then
   setup_cronjob
 elif [[ $1 == "fetch" ]]
