@@ -116,11 +116,10 @@ function load_roles () {
 function fetch_public () {
   # EXAMPLE INPUT1: SRC_ROLES=( "local" "$DIR_LOCAL/public" ) 
   # EXAMPLE INPUT2: [ "git", "https://api.github.com/users/devd4n/repos", "ansible_role"]
-  #---
   if [ ${SRC_ROLES[0]} == "local" ]
   then
     rsync ${SRC_ROLES[1]} $DIR_LOCAL_PUBLIC
-  else if [ ${SRC_ROLES[0]} == "git" ]
+  elif [ ${SRC_ROLES[0]} == "git" ]
   then
     #  tasks:
     #  - name: Get All Ansible Roles by definition in config file (Currently Static Value)
@@ -141,7 +140,7 @@ function fetch_private () {
   if [ ${SRC_ROLES[0]} == "local" ]
   then
     rsync ${SRC_PRIV[1]} $DIR_LOCAL_PRIVATE
-  else if [ ${SRC_ROLES[0]} == "git" ]
+  elif [ ${SRC_ROLES[0]} == "git" ]
   then
     echo "fetch_private from git is currently under development. Please use local!"
     exit
