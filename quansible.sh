@@ -86,6 +86,8 @@ EOF
     python3 -m pip install ansible==$ANSIBLE_VERSION
   fi
 
+  # add start directory to bashrc
+  echo "cd /srv" >> /home/$USER_ANSIBLE/.bashrc
   # run init playbook
   EXTRA_VARS="@$DIR_ANSIBLE_EXTRA_VARS/ansible_vars.yml"
   INIT_PLAYBOOK=$DIR_QUANSIBLE/quansible-init.yml
@@ -169,12 +171,12 @@ function setup_cronjob () {
   # https://stackoverflow.com/questions/610839/how-can-i-programmatically-create-a-new-cron-job/610860#610860
   # Cron only runs every one minute to start the job each 10sec 6 jobs are started with different sleep times
   # retrieved from: https://stackoverflow.com/questions/30295868/how-to-setup-cron-job-to-run-every-10-seconds-in-linux
-  echo "* * * * * $USER_ANSIBLE cd $DIR_QUANSIBLE && ./quansible.sh fetch 2>&1 | tee -a $LOG_FILE_CRON 2>&1" | sudo tee /etc/cron.d/quansible_cron
-  echo "* * * * * $USER_ANSIBLE sleep 10 ; cd $DIR_QUANSIBLE && ./quansible.sh fetch 2>&1 | tee -a $LOG_FILE_CRON 2>&1" | sudo tee /etc/cron.d/quansible_cron
-  echo "* * * * * $USER_ANSIBLE sleep 20 ; cd $DIR_QUANSIBLE && ./quansible.sh fetch 2>&1 | tee -a $LOG_FILE_CRON 2>&1" | sudo tee /etc/cron.d/quansible_cron
-  echo "* * * * * $USER_ANSIBLE sleep 30 ; cd $DIR_QUANSIBLE && ./quansible.sh fetch 2>&1 | tee -a $LOG_FILE_CRON 2>&1" | sudo tee /etc/cron.d/quansible_cron
-  echo "* * * * * $USER_ANSIBLE sleep 40 ; cd $DIR_QUANSIBLE && ./quansible.sh fetch 2>&1 | tee -a $LOG_FILE_CRON 2>&1" | sudo tee /etc/cron.d/quansible_cron
-  echo "* * * * * $USER_ANSIBLE sleep 50 ; cd $DIR_QUANSIBLE && ./quansible.sh fetch 2>&1 | tee -a $LOG_FILE_CRON 2>&1" | sudo tee /etc/cron.d/quansible_cron 
+  echo "* * * * * $USER_ANSIBLE cd $DIR_QUANSIBLE && ./quansible.sh fetch 2>&1 | tee -a $LOG_FILE_CRON" | sudo tee /etc/cron.d/quansible_cron
+  echo "* * * * * $USER_ANSIBLE sleep 10 ; cd $DIR_QUANSIBLE && ./quansible.sh fetch 2>&1 | tee -a $LOG_FILE_CRON" | sudo tee -a /etc/cron.d/quansible_cron
+  echo "* * * * * $USER_ANSIBLE sleep 20 ; cd $DIR_QUANSIBLE && ./quansible.sh fetch 2>&1 | tee -a $LOG_FILE_CRON" | sudo tee -a /etc/cron.d/quansible_cron
+  echo "* * * * * $USER_ANSIBLE sleep 30 ; cd $DIR_QUANSIBLE && ./quansible.sh fetch 2>&1 | tee -a $LOG_FILE_CRON" | sudo tee -a /etc/cron.d/quansible_cron
+  echo "* * * * * $USER_ANSIBLE sleep 40 ; cd $DIR_QUANSIBLE && ./quansible.sh fetch 2>&1 | tee -a $LOG_FILE_CRON" | sudo tee -a /etc/cron.d/quansible_cron
+  echo "* * * * * $USER_ANSIBLE sleep 50 ; cd $DIR_QUANSIBLE && ./quansible.sh fetch 2>&1 | tee -a $LOG_FILE_CRON" | sudo tee -a /etc/cron.d/quansible_cron 
   crontab /etc/cron.d/quansible_cron >> $LOG_FILE_CRON 2>&1
   service cron start 
 }
