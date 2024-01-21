@@ -22,7 +22,7 @@ following Steps 1.-5. must be run with sudo rights
 3. `sudo cd quansible`
 4. `sudo chmod +x quansible.sh`
 5. `sudo ./quansible.sh setup-env`
-6. `su ansible_admin`
+6. `su usr_quansible`
 
 
 ## How to use
@@ -161,12 +161,6 @@ git push origin main
 # TODOs-Bugs
 
 TODOs:
-- split quansible-init.yml playbook into playbook or scripts
-    - one setup
-    - one to load roles
-    - one to load or rsync private
-- create function to setup Cronjob each 10sec update roles and private - https://stackoverflow.com/questions/30295868/how-to-setup-cron-job-to-run-every-10-seconds-in-linux
-
-- Test on Docker
-- Test on VM
+- (open) Test on Docker
+- (open) Test on VM
 - Push to main
