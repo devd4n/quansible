@@ -63,11 +63,16 @@ venv: Python Venv to use for operation
 
 ```
 |-- "ROOT_DIR"
+    |-- quansible
+        |   |-- README.md
+        |   |-- quansible-init.yml
+        |   |-- quansible.cfg
+        |   |-- quansible.sh
     |-- DIR_LIVE
         |-- ansible
         |   |-- private
-        |   |   |-- ansible.cfg
-        |   |   |-- ansible_vars.yml
+        |   |   |-- ansible.cfg             # written from quansible.cfg
+        |   |   |-- ansible_vars.yml        # written from quansible.cfg
         |   |   |-- inventory
         |   |   |   |-- inventory.yml
         |   |   |   |-- host_vars
@@ -77,11 +82,6 @@ venv: Python Venv to use for operation
         |   |   |   |-- ansible_role_sshd
         |   |   |   |-- ansible_role_sshd-agent
         |   |-- requirements.yml
-        |-- quansible
-        |   |-- README.md
-        |   |-- quansible-init.yml
-        |   |-- quansible.cfg
-        |   |-- quansible.sh
         |-- venv
     |-- DIR_LOCAL
 ```

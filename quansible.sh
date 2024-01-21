@@ -46,7 +46,7 @@ function install_environment () {
 # update quansible environment
 function update_ansible () {
   # create necessary folders
-  mkdir --parents $DIR_LIVE $DIR_ANSIBLE $DIR_INVENTORY $DIR_ANSIBLE_EXTRA_VARS
+  mkdir --parents $DIR_LIVE $DIR_LOCAL $DIR_ANSIBLE $DIR_INVENTORY $DIR_ANSIBLE_EXTRA_VARS
   
   # write variables to file
   cat <<-EOF > $DIR_ANSIBLE_EXTRA_VARS/ansible_vars.yml
@@ -99,7 +99,7 @@ function upgrade() {
   #!/bin/bash
   rm -r $DIR_LIVE/quansible
   cd $DIR_LIVE
-  git clone $GITHUB_QUANSIBLE
+  git clone $GITHUB_QUANSIBLE -–depth 1
   chmod +x $DIR_LIVE/quansible/quansible.sh
 EOF
   chmod +x $DIR_LIVE/update_quansible.sh
@@ -114,11 +114,61 @@ function load_roles () {
 }
 
 function fetch_public () {
-  exit
+  # EXAMPLE INPUT1: SRC_ROLES=( "local" "$DIR_LOCAL/public" ) 
+  # EXAMPLE INPUT2: [ "git", "https://api.github.com/users/devd4n/repos", "ansible_role"]
+  #---
+  if [ ${SRC_ROLES[0]} == "local" ]
+  then
+    rsync ${SRC_ROLES[1]} $DIR_LOCAL_PUBLIC
+  else if [ ${SRC_ROLES[0]} == "git" ]
+  then
+    #  tasks:
+    #  - name: Get All Ansible Roles by definition in config file (Currently Static Value)
+    #    curl -s "https://api.github.com/users/devd4n/repos?per_page=1000" | grep -w clone_url | grep -o '[^"]*\.git' | grep ansible_role
+    #
+    #  - name: write Ansible Roles to requirements.yml
+    #    replace:
+    #      regexp: '^(.*)$'
+    #      replace: '- src: \1'
+    source $QUANSIBLE_VENV/bin/activate
+    cd $DIR_ANSIBLE
+    ansible-galaxy install -r "$DIR_ANSIBLE_REQUIREMENTS/requirements.yml" --ignore-errors
+  fi
 }
 
 function fetch_private () {
+  # EXAMPLE INPUT: SRC_PRIV=( "local" "$DIR_LOCAL/private" 
+  if [ ${SRC_ROLES[0]} == "local" ]
+  then
+    rsync ${SRC_PRIV[1]} $DIR_LOCAL_PRIVATE
+  else if [ ${SRC_ROLES[0]} == "git" ]
+  then
+    echo "fetch_private from git is currently under development. Please use local!"
+    exit
+  fi
+  # PSEUDO CODE
+  #if SRC_PRIV=="local"
+  # -> rsync quansible-local/priv_path > $DIR_LIVE/priv_path
+  #elif SRC_PRIV=="remote"
+    # Check if current repo is the repo which is configured currently
+    # if no -> remove full and git clone => git clone <<what to clone>> $QUANSIBLE_DIR/.temp_quansible/ --depth 1
+    # 
+    # if yes -> git pull (force -overwrite local)
   exit
+}
+
+
+function setup_cronjob () {
+  this_script=$DIR_QUANSIBLE/quansible.sh
+  # https://stackoverflow.com/questions/610839/how-can-i-programmatically-create-a-new-cron-job/610860#610860
+  # Cron only runs every one minute to start the job each 10sec 6 jobs are started with different sleep times
+  # retrieved from: https://stackoverflow.com/questions/30295868/how-to-setup-cron-job-to-run-every-10-seconds-in-linux
+  echo "* * * * * $USER_ANSIBLE ( $this_script fetch )" | sudo tee /etc/cron.d/quansible_cron
+  echo "* * * * * $USER_ANSIBLE ( sleep 10 ; $this_script fetch )" | sudo tee -a /etc/cron.d/quansible_cron
+  echo "* * * * * $USER_ANSIBLE ( sleep 20 ; $this_script fetch )" | sudo tee -a /etc/cron.d/quansible_cron
+  echo "* * * * * $USER_ANSIBLE ( sleep 30 ; $this_script fetch )" | sudo tee -a /etc/cron.d/quansible_cron 
+  echo "* * * * * $USER_ANSIBLE ( sleep 40 ; $this_script fetch )" | sudo tee -a /etc/cron.d/quansible_cron 
+  echo "* * * * * $USER_ANSIBLE ( sleep 50 ; $this_script fetch )" | sudo tee -a /etc/cron.d/quansible_cron
 }
 
 # Run function defined by parameter of this script (setup | init)
@@ -127,11 +177,18 @@ then
   install_environment
   su -c "./quansible.sh upgrade" $USER_ANSIBLE
   su -c "./quansible.sh update" $USER_ANSIBLE
-  su -c "./quansible.sh update-roles" $USER_ANSIBLE
+  #su -c "./quansible.sh update-roles" $USER_ANSIBLE
   exit
 elif [[ $1 == "update" ]]
 then
   update_ansible
+elif [[ setup_cronjob ]]
+then
+  setup_cronjob
+elif [[ $1 == "fetch" ]]
+then
+  fetch public
+  fetch private
 elif [[ $1 == "update-roles" ]]
 then
   load_roles
@@ -139,6 +196,6 @@ elif [[ $1 == "upgrade" ]]
 then
   upgrade
 else
-  echo "usage: $0 <setup-env|update|update-roles|upgrade>"
+  echo "usage: $0 <setup-env|update|update-roles|upgrade|fetch>"
   exit
 fi
