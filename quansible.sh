@@ -179,6 +179,7 @@ then
   install_environment
   su -c "./quansible.sh upgrade" $USER_ANSIBLE
   su -c "./quansible.sh update" $USER_ANSIBLE
+  setup_cronjob
   #su -c "./quansible.sh update-roles" $USER_ANSIBLE
   exit
 elif [[ $1 == "update" ]]
