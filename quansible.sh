@@ -159,7 +159,7 @@ function fetch_private () {
 
 function setup_cronjob () {
   apt install cron -y
-  mkdir -p /var/log/cron_quansible.log
+  touch /var/log/cron_quansible.log
   this_script=$DIR_QUANSIBLE/quansible.sh
   # https://stackoverflow.com/questions/610839/how-can-i-programmatically-create-a-new-cron-job/610860#610860
   # Cron only runs every one minute to start the job each 10sec 6 jobs are started with different sleep times
