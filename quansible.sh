@@ -61,6 +61,7 @@ function update_ansible () {
   roles_path: $ROLES_PATH
   roles_repo_search: $ROLES_REPO_SEARCH
   user_ansible_admin: $USER_ANSIBLE
+  usergroup_ansible: $GROUP_ANSIBLE
 EOF
 
   # write variables to ansible.cfg
