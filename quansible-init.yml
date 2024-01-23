@@ -5,16 +5,16 @@
   become: yes
 
   tasks:
-  - name: Ensure group "ansible_admins" exists
+  - name: Ensure group ""{{ usergroup_ansible }}"" exists
     group:
-      name: ansible_admins
+      name: "{{ usergroup_ansible }}"
       state: present
 
   - name: Create Ansible Admin user and Group
     user:
       name: "{{ user_ansible_admin }}"
       comment: "local ansible admin"
-      group: ansible_admins
+      group: "{{ usergroup_ansible }}"
       shell: /bin/bash
       groups: sudo
       append: yes
@@ -25,7 +25,7 @@
       recurse : yes
       path    : "{{ item }}"
       owner: "{{ user_ansible_admin }}"
-      group: ansible_admins
+      group: "{{ usergroup_ansible }}"
       mode    : "0775"
     with_items:
     - "{{ root_dir }}"
@@ -73,5 +73,5 @@
     file: 
       path: "{{ root_dir }}" 
       owner: "{{ user_ansible_admin }}"
-      group: ansible_admins
+      group: "{{ usergroup_ansible }}"
       recurse: yes
