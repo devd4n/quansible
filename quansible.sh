@@ -65,6 +65,10 @@ function install_environment () {
 
 # update quansible environment
 function update_ansible () {
+	ANSIBLE_CONFIG=$DIR_ANSIBLE_CFG/ansible.cfg
+  EXTRA_VARS="@$DIR_ANSIBLE_EXTRA_VARS/ansible_vars.yml"
+	INIT_PLAYBOOK=$DIR_QUANSIBLE/quansible-init.yml
+
 	# create necessary folders
 	mkdir --parents $DIR_LIVE $DIR_LOCAL $DIR_ANSIBLE $DIR_INVENTORY $DIR_ANSIBLE_EXTRA_VARS
 	
@@ -82,7 +86,7 @@ function update_ansible () {
 	EOF
 
 	# write variables to ansible.cfg
-	cat <<-EOF > $DIR_ANSIBLE/ansible.cfg
+	cat <<-EOF > $ANSIBLE_CONFIG
 	[defaults]
 	inventory = $DIR_INVENTORY
 	roles_path = $ROLES_PATH
@@ -109,9 +113,6 @@ function update_ansible () {
 	echo "source $DIR_LIVE/venv/bin/activate"
 
 	# run init playbook
-	EXTRA_VARS="@$DIR_ANSIBLE_EXTRA_VARS/ansible_vars.yml"
-	INIT_PLAYBOOK=$DIR_QUANSIBLE/quansible-init.yml
-	ANSIBLE_CONFIG=$DIR_ANSIBLE_CFG/ansible.cfg
 	cd $DIR_ANSIBLE
 	ansible-playbook --extra-vars $EXTRA_VARS $INIT_PLAYBOOK # shouldn't be needed "--ask-become-pass"
 	#deactivate
