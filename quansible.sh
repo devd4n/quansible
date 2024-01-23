@@ -67,7 +67,7 @@ function install_environment () {
 function update_ansible () {
 	ANSIBLE_CONFIG=$DIR_ANSIBLE_CFG/ansible.cfg
   EXTRA_VARS="@$DIR_ANSIBLE_EXTRA_VARS/ansible_vars.yml"
-	INIT_PLAYBOOK=$DIR_QUANSIBLE/quansible-init.yml
+	INIT_PLAYBOOK=$DIR_QUANSIBLE/pb_init-quansible.yml
 
 	# create necessary folders
 	mkdir --parents $DIR_LIVE $DIR_LOCAL $DIR_ANSIBLE $DIR_INVENTORY $DIR_ANSIBLE_EXTRA_VARS
