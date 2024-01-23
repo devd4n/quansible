@@ -125,6 +125,10 @@ function update_ansible () {
 #
 # creates the update_quansible.sh script
 #
+# TODO: custom config (quansible.cfg) und log files .log inside quansible dir
+#       should be in other directory outside of quansible - at root
+#				cause quansible dir is removed and reloaded inside the upgrade function
+#
 function upgrade() {
 	cat <<-EOF > $DIR_LIVE/update_quansible.sh
 	#!/bin/bash
