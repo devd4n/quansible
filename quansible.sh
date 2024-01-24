@@ -110,7 +110,7 @@ function update_ansible () {
 
 	# add start directory to bashrc
 	echo "cd /srv" >> /home/$USER_ANSIBLE/.bashrc
-	echo "source $DIR_LIVE/venv/bin/activate"
+	echo "source $DIR_LIVE/venv/bin/activate" >> /home/$USER_ANSIBLE/.bashrc
 
 	# run init playbook
 	cd $DIR_ANSIBLE
