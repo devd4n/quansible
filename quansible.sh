@@ -156,7 +156,7 @@ function setup_cronjob () {
 	echo "* * * * * $USER_ANSIBLE sleep 30 ; cd $DIR_QUANSIBLE && ./quansible.sh fetch 2>&1 | tee -a $LOG_FILE_CRON" | sudo tee -a /etc/cron.d/quansible_cron
 	echo "* * * * * $USER_ANSIBLE sleep 40 ; cd $DIR_QUANSIBLE && ./quansible.sh fetch 2>&1 | tee -a $LOG_FILE_CRON" | sudo tee -a /etc/cron.d/quansible_cron
 	echo "* * * * * $USER_ANSIBLE sleep 50 ; cd $DIR_QUANSIBLE && ./quansible.sh fetch 2>&1 | tee -a $LOG_FILE_CRON" | sudo tee -a /etc/cron.d/quansible_cron 
-	crontab /etc/cron.d/quansible_cron >> $LOG_FILE_CRON 2>&1
+	crontab /etc/cron.d/quansible_cron 2>&1 | tee -a $LOG_FILE_CRON
 	service cron start 
 }
 
