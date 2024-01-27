@@ -18,22 +18,22 @@ LOG_FILE=$DIR_QUANSIBLE/quansible.log
 LOG_FILE_CRON=$DIR_QUANSIBLE/quansible_cron.log
 
 #################################################################
-# Load quansible.cfg file and include it to this script         #
+# Load quansible.env file and include it to this script         #
 #################################################################
 #
 # !!! Script have to be run on location of the script !!!
-# -> If not normaly quansible.cfg doesn't exists and the error is printed out
+# -> If not normaly quansible.env doesn't exists and the error is printed out
 #
-if [ -r "$DIR_QUANSIBLE/quansible.cfg" ]             # if custom config exists
+if [ -r "$DIR_QUANSIBLE/quansible.env" ]             # if custom config exists
 then
-	echo "load custom quansible.cfg"          
-	. "$DIR_QUANSIBLE/quansible.cfg"                   # load custom config
-elif [ -r "$DIR_QUANSIBLE/default_quansible.cfg" ]   # if no custom config exits use default config fil
+	echo "load custom quansible.env"          
+	. "$DIR_QUANSIBLE/quansible.env"                   # load custom config
+elif [ -r "$DIR_QUANSIBLE/default_quansible.env" ]   # if no custom config exits use default config fil
 then
-	echo "load default quansible.cfg"
-	. "$DIR_QUANSIBLE/default_quansible.cfg"           # load default config
+	echo "load default quansible.env"
+	. "$DIR_QUANSIBLE/default_quansible.env"           # load default config
 else
-	echo "ERROR: something went wrong: "./quansible.cfg" or "default_quansible.cfg" file not found \n Or script is running not from the quansible directory"
+	echo "ERROR: something went wrong: "./quansible.env" or "default_quansible.env" file not found \n Or script is running not from the quansible directory"
 	exit
 fi
 
@@ -125,7 +125,7 @@ function update_ansible () {
 #
 # creates the update_quansible.sh script
 #
-# TODO: custom config (quansible.cfg) und log files .log inside quansible dir
+# TODO: custom config (quansible.env) und log files .log inside quansible dir
 #       should be in other directory outside of quansible - at root
 #				cause quansible dir is removed and reloaded inside the upgrade function
 #
