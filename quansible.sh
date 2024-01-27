@@ -167,10 +167,10 @@ function setup_cronjob () {
 function fetch_public () {
 	# EXAMPLE INPUT1: SRC_ROLES=( "local" "$DIR_LOCAL/public" ) 
 	# EXAMPLE INPUT2: [ "git", "https://api.github.com/users/devd4n/repos", "ansible_role"]
-	if [ ${SRC_ROLES[0]} == "local" ]
+	if [ ${SRC_ROLES_TYPE} == "local" ]
 	then
-	  rsync -rv "${SRC_ROLES[1]}/" $DIR_LIVE_PUBLIC
-	elif [ ${SRC_ROLES[0]} == "git" ]
+	  rsync -rv "${SRC_ROLES_PATH}/" $DIR_LIVE_PUBLIC
+	elif [ ${SRC_ROLES_TYPE} == "git" ]
 	then
 	  echo "fetch_public from git is currently under development. Please use local!" >> $LOG_FILE
 	  exit
@@ -197,10 +197,10 @@ function fetch_public () {
 #
 function fetch_private () {
 	# EXAMPLE INPUT: SRC_PRIV=( "local" "$DIR_LOCAL/private" 
-	if [ ${SRC_PRIV[0]} == "local" ]
+	if [ ${SRC_PRIV_TYPE} == "local" ]
 	then
-	  rsync -rv "${SRC_PRIV[1]}/" $DIR_LOCAL_PRIVATE
-	elif [ ${SRC_PRIV[0]} == "git" ]
+	  rsync -rv "${SRC_PRIV_PATH}/" $DIR_LOCAL_PRIVATE
+	elif [ ${SRC_PRIV_TYPE} == "git" ]
 	then
 	  echo "fetch_private from git is currently under development. Please use local!" >> $LOG_FILE
 	  exit
