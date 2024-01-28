@@ -29,7 +29,7 @@ function log () {
 	    log_level='INFO'
 		log_text=$1
 	fi
-	echo "$logtime :|: $log_level :|: $log_text" | tee -a $LOG_FILE
+	echo "$log_time :|: $log_level :|: $log_text" | tee -a $LOG_FILE
 }
 
 #################################################################
