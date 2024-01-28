@@ -264,12 +264,17 @@ then
 	exit
 elif [[ $1 == "update" ]]
 then
+    log "function_call:update_ansible"
+	log "ROOT_DIR=$ROOT_DIR"
+	log "DIR_QUANSIBLE=$DIR_QUANSIBLE"
 	update_ansible
 elif [[ $1 == "setup_cronjob" ]]
 then
+	log "function_call:setup_cronjob"
 	setup_cronjob
 elif [[ $1 == "fetch" ]]
 then
+	log "function_call:fetch"
 	fetch_public
 	fetch_private
 elif [[ $1 == "update-roles" ]]
@@ -278,6 +283,7 @@ then
 elif [[ $1 == "upgrade" ]]
 then
 	upgrade
+	log "function_call:upgrade"
 else
 	echo "usage: $0 <setup-env|update|update-roles|upgrade|fetch>"
 	exit
