@@ -215,7 +215,7 @@ function fetch_public () {
 	        #      replace: '- src: \1'
 	        source $QUANSIBLE_VENV/bin/activate
 	        cd $DIR_ANSIBLE
-	        ansible-galaxy install -r "$DIR_ANSIBLE_REQUIREMENTS/requirements.yml" --ignore-errors
+	        ansible-galaxy install -r "$DIR_ANSIBLE_REQUIREMENTS/requirements.yml" | xargs -I {} log {} # --ignore-errors
     		;;
   		galaxy-only)
     		log ERROR "fetch_public::type:galaxy Variable SRC_ROLES_TYPE=galaxy-only not supported yet"
