@@ -17,6 +17,21 @@ DIR_QUANSIBLE=$(pwd)
 LOG_FILE=$DIR_QUANSIBLE/quansible.log
 LOG_FILE_CRON=$DIR_QUANSIBLE/quansible_cron.log
 
+LOG_LEVELS=('INFO', 'WARN', 'ERROR')
+
+function log () {
+	log_time=$(date '+%d/%m/%Y %H:%M:%S')
+	if [[ "${LOG_LEVELS[@]}" =~ $1 ]]; 
+	then
+		log_level=$1
+		log_text=$2
+	else
+	    log_level='INFO'
+		log_text=$1
+	fi
+	echo "$logtime :|: $log_level :|: $log_text" | tee -a $LOG_FILE
+}
+
 #################################################################
 # Load quansible.env file and include it to this script         #
 #################################################################
@@ -36,6 +51,8 @@ else
 	echo "ERROR: something went wrong: "./quansible.env" or "default_quansible.env" file not found \n Or script is running not from the quansible directory"
 	exit
 fi
+
+
 
 # install necessary dependencies and set system permissions
 function install_environment () {
@@ -66,7 +83,7 @@ function install_environment () {
 # update quansible environment
 function update_ansible () {
 	ANSIBLE_CONFIG=$DIR_ANSIBLE_CFG/ansible.cfg
-  EXTRA_VARS="@$DIR_ANSIBLE_EXTRA_VARS/ansible_vars.yml"
+  	EXTRA_VARS="@$DIR_ANSIBLE_EXTRA_VARS/ansible_vars.yml"
 	INIT_PLAYBOOK=$DIR_QUANSIBLE/pb_init-quansible.yml
 
 	# create necessary folders
@@ -167,28 +184,42 @@ function setup_cronjob () {
 function fetch_public () {
 	# EXAMPLE INPUT1: SRC_ROLES=( "local" "$DIR_LOCAL/public" ) 
 	# EXAMPLE INPUT2: [ "git", "https://api.github.com/users/devd4n/repos", "ansible_role"]
-	if [ ${SRC_ROLES_TYPE} == "local" ]
-	then
-	  rsync -rv "${SRC_ROLES_PATH}/" $DIR_LIVE_PUBLIC
-	elif [ ${SRC_ROLES_TYPE} == "git" ]
-	then
-	  echo "fetch_public from git is currently under development. Please use local!" >> $LOG_FILE
-	  exit
-	  # Load all Roles from requirements.yml via ansible galaxy
-	  # ignore roles which didn't contain a meta/main.yml file.
-
-	  #  tasks:
-	  #  - name: Get All Ansible Roles by definition in config file (Currently Static Value)
-	  #    curl -s "https://api.github.com/users/devd4n/repos?per_page=1000" | grep -w clone_url | grep -o '[^"]*\.git' | grep ansible_role
-	  #
-	  #  - name: write Ansible Roles to requirements.yml
-	  #    replace:
-	  #      regexp: '^(.*)$'
-	  #      replace: '- src: \1'
-	  #source $QUANSIBLE_VENV/bin/activate
-	  #cd $DIR_ANSIBLE
-	  #ansible-galaxy install -r "$DIR_ANSIBLE_REQUIREMENTS/requirements.yml" --ignore-errors
-	fi
+	
+	case $SRC_ROLES_TYPE in
+  		local)
+    		log "fetch_public::type:local"
+			rsync -rv "${SRC_ROLES_PATH}/" $DIR_LIVE_PUBLIC
+    		;;
+  		git)
+    		log "fetch_public::type:git"
+			# INPUT
+	  	    # SRC_ROLES_TYPE="local" # local | git | galaxy-only
+		    # SRC_ROLES_PATH="$DIR_LOCAL/public"                          # local => filepath | git => https repo | galaxy-only => ''
+		    # SRC_ROLES_FILTER=""                                         # local => '' | git => <<search filter>> | galaxy-only => '<<first-role>>, <<second-role>>, ...'
+	      
+			# retrieve all roles from git repo which maches a
+			auth_token=$(cat $SRC_ROLES_TOKEN_FILE)
+			role_repos=curl -H "Authorization: token $auth_token" -s "https://api.github.com/search/repositories?q=user:devd4n" | grep -w clone_url | grep -o '[^"]*\.git' | grep $SRC_ROLES_FILTER
+			log "repos: $role_repos"
+			# 
+	        #  - name: write Ansible Roles to requirements.yml
+	        #    replace:
+	        #      regexp: '^(.*)$'
+	        #      replace: '- src: \1'
+	        #source $QUANSIBLE_VENV/bin/activate
+	        #cd $DIR_ANSIBLE
+	        #ansible-galaxy install -r "$DIR_ANSIBLE_REQUIREMENTS/requirements.yml" --ignore-errors
+    		;;
+  		galaxy-only)
+    		log ERROR "fetch_public::type:galaxy Variable SRC_ROLES_TYPE=galaxy-only not supported yet"
+			exit
+    		;;
+		*)
+    		log ERROR "Variable SRC_ROLES_TYPE not correct"
+			log "SRC_ROLES_TYPE=$SRC_ROLES_TYPE should be local | git | galaxy-only"
+			exit
+    		;;
+	esac
 }
 
 #############################################################################
@@ -199,10 +230,12 @@ function fetch_private () {
 	# EXAMPLE INPUT: SRC_PRIV=( "local" "$DIR_LOCAL/private" 
 	if [ ${SRC_PRIV_TYPE} == "local" ]
 	then
+	  log "fetch_private::type:local"
 	  rsync -rv "${SRC_PRIV_PATH}/" $DIR_LOCAL_PRIVATE
 	elif [ ${SRC_PRIV_TYPE} == "git" ]
 	then
-	  echo "fetch_private from git is currently under development. Please use local!" >> $LOG_FILE
+	  log "fetch_private::type:git"
+	  log ERROR "fetch_private from git is currently under development. Please use local!"
 	  exit
 	fi
 	# PSEUDO CODE
