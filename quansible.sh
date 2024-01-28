@@ -167,12 +167,12 @@ function upgrade() {
 # retrieved from: https://stackoverflow.com/questions/30295868/how-to-setup-cron-job-to-run-every-10-seconds-in-linux
 
 function setup_cronjob () {
-	echo "* * * * * $USER_ANSIBLE cd $DIR_QUANSIBLE && ./quansible.sh fetch 2>&1 | tee -a $LOG_FILE_CRON" | sudo tee /etc/cron.d/quansible_cron
-	echo "* * * * * $USER_ANSIBLE sleep 10 ; cd $DIR_QUANSIBLE && ./quansible.sh fetch 2>&1 | tee -a $LOG_FILE_CRON" | sudo tee -a /etc/cron.d/quansible_cron
-	echo "* * * * * $USER_ANSIBLE sleep 20 ; cd $DIR_QUANSIBLE && ./quansible.sh fetch 2>&1 | tee -a $LOG_FILE_CRON" | sudo tee -a /etc/cron.d/quansible_cron
-	echo "* * * * * $USER_ANSIBLE sleep 30 ; cd $DIR_QUANSIBLE && ./quansible.sh fetch 2>&1 | tee -a $LOG_FILE_CRON" | sudo tee -a /etc/cron.d/quansible_cron
-	echo "* * * * * $USER_ANSIBLE sleep 40 ; cd $DIR_QUANSIBLE && ./quansible.sh fetch 2>&1 | tee -a $LOG_FILE_CRON" | sudo tee -a /etc/cron.d/quansible_cron
-	echo "* * * * * $USER_ANSIBLE sleep 50 ; cd $DIR_QUANSIBLE && ./quansible.sh fetch 2>&1 | tee -a $LOG_FILE_CRON" | sudo tee -a /etc/cron.d/quansible_cron 
+	echo "* * * * * $USER_ANSIBLE cd $DIR_QUANSIBLE && ./quansible.sh fetch 2> $LOG_FILE_CRON" | sudo tee /etc/cron.d/quansible_cron
+	echo "* * * * * $USER_ANSIBLE sleep 10 ; cd $DIR_QUANSIBLE && ./quansible.sh fetch 2>&1 > /dev/null | $LOG_FILE_CRON" | sudo tee -a /etc/cron.d/quansible_cron
+	echo "* * * * * $USER_ANSIBLE sleep 20 ; cd $DIR_QUANSIBLE && ./quansible.sh fetch 2>&1 > /dev/null | $LOG_FILE_CRON" | sudo tee -a /etc/cron.d/quansible_cron
+	echo "* * * * * $USER_ANSIBLE sleep 30 ; cd $DIR_QUANSIBLE && ./quansible.sh fetch 2>&1 > /dev/null | $LOG_FILE_CRON" | sudo tee -a /etc/cron.d/quansible_cron
+	echo "* * * * * $USER_ANSIBLE sleep 40 ; cd $DIR_QUANSIBLE && ./quansible.sh fetch 2>&1 > /dev/null | $LOG_FILE_CRON" | sudo tee -a /etc/cron.d/quansible_cron
+	echo "* * * * * $USER_ANSIBLE sleep 50 ; cd $DIR_QUANSIBLE && ./quansible.sh fetch 2>&1 > /dev/null | $LOG_FILE_CRON" | sudo tee -a /etc/cron.d/quansible_cron 
 	crontab /etc/cron.d/quansible_cron 2>&1 | tee -a $LOG_FILE_CRON
 	service cron start 
 }
@@ -199,7 +199,7 @@ function fetch_public () {
 	      
 			# retrieve all roles from git repo which maches a
 			auth_token=$(cat $SRC_ROLES_TOKEN_FILE)
-			role_repos=curl -H "Authorization: token $auth_token" -s "https://api.github.com/search/repositories?q=user:devd4n" | grep -w clone_url | grep -o '[^"]*\.git' | grep $SRC_ROLES_FILTER
+			role_repos=$(curl -H "Authorization: token $auth_token" -s "https://api.github.com/search/repositories?q=user:devd4n" | grep -w clone_url | grep -o '[^"]*\.git' | grep $SRC_ROLES_FILTER)
 			log "repos: $role_repos"
 			# 
 
