@@ -204,8 +204,9 @@ function fetch_public () {
 			role_repos=$(curl -H "Authorization: token $auth_token" -s "https://api.github.com/search/repositories?q=user:devd4n" | grep -w clone_url | grep -o '[^"]*\.git' | grep $SRC_ROLES_FILTER)
 			log "repos: $role_repos"
 			while IFS= read -r line; do
-    			echo "- src: $line" >> $DIR_ANSIBLE_REQUIREMENTS/requirements.yml
-				log "-src: $line"
+			    # if line not exists (grep not sucessful) add line to requirements.yml file
+			    grep -qxF "-src: $line" $DIR_ANSIBLE_REQUIREMENTS/requirements.yml || log "add -src: $line"
+				grep -qxF "-src: $line" $DIR_ANSIBLE_REQUIREMENTS/requirements.yml || "- src: $line" >> $DIR_ANSIBLE_REQUIREMENTS/requirements.yml
 			done <<< $role_repos
 
 	        #  - name: write Ansible Roles to requirements.yml
