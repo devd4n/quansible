@@ -56,6 +56,7 @@ fi
 
 # install necessary dependencies and set system permissions
 function install_environment () {
+	log "call_function:install_environment"
 	# create necessary folders
 	mkdir --parents $DIR_LIVE
 
@@ -78,6 +79,7 @@ function install_environment () {
 	
 	# give full ownership to the ansible user
 	chown -R $USER_ANSIBLE:$USER_ANSIBLE $DIR_LIVE
+	chown -R $USER_ANSIBLE:$USER_ANSIBLE $DIR_QUANSIBLE
 }
 
 # update quansible environment
@@ -167,12 +169,12 @@ function upgrade() {
 # retrieved from: https://stackoverflow.com/questions/30295868/how-to-setup-cron-job-to-run-every-10-seconds-in-linux
 
 function setup_cronjob () {
-	echo "* * * * * $USER_ANSIBLE cd $DIR_QUANSIBLE && ./quansible.sh fetch 2> $LOG_FILE_CRON" | sudo tee /etc/cron.d/quansible_cron
-	echo "* * * * * $USER_ANSIBLE sleep 10 ; cd $DIR_QUANSIBLE && ./quansible.sh fetch 2>&1 > /dev/null | $LOG_FILE_CRON" | sudo tee -a /etc/cron.d/quansible_cron
-	echo "* * * * * $USER_ANSIBLE sleep 20 ; cd $DIR_QUANSIBLE && ./quansible.sh fetch 2>&1 > /dev/null | $LOG_FILE_CRON" | sudo tee -a /etc/cron.d/quansible_cron
-	echo "* * * * * $USER_ANSIBLE sleep 30 ; cd $DIR_QUANSIBLE && ./quansible.sh fetch 2>&1 > /dev/null | $LOG_FILE_CRON" | sudo tee -a /etc/cron.d/quansible_cron
-	echo "* * * * * $USER_ANSIBLE sleep 40 ; cd $DIR_QUANSIBLE && ./quansible.sh fetch 2>&1 > /dev/null | $LOG_FILE_CRON" | sudo tee -a /etc/cron.d/quansible_cron
-	echo "* * * * * $USER_ANSIBLE sleep 50 ; cd $DIR_QUANSIBLE && ./quansible.sh fetch 2>&1 > /dev/null | $LOG_FILE_CRON" | sudo tee -a /etc/cron.d/quansible_cron 
+	echo "* * * * * $USER_ANSIBLE cd $DIR_QUANSIBLE && ./quansible.sh fetch 2>&1 > /dev/null | tee -a $LOG_FILE_CRON" | sudo tee /etc/cron.d/quansible_cron
+	echo "* * * * * $USER_ANSIBLE sleep 10 ; cd $DIR_QUANSIBLE && ./quansible.sh fetch 2>&1 > /dev/null | tee -a $LOG_FILE_CRON" | sudo tee -a /etc/cron.d/quansible_cron
+	echo "* * * * * $USER_ANSIBLE sleep 20 ; cd $DIR_QUANSIBLE && ./quansible.sh fetch 2>&1 > /dev/null | tee -a $LOG_FILE_CRON" | sudo tee -a /etc/cron.d/quansible_cron
+	echo "* * * * * $USER_ANSIBLE sleep 30 ; cd $DIR_QUANSIBLE && ./quansible.sh fetch 2>&1 > /dev/null | tee -a $LOG_FILE_CRON" | sudo tee -a /etc/cron.d/quansible_cron
+	echo "* * * * * $USER_ANSIBLE sleep 40 ; cd $DIR_QUANSIBLE && ./quansible.sh fetch 2>&1 > /dev/null | tee -a $LOG_FILE_CRON" | sudo tee -a /etc/cron.d/quansible_cron
+	echo "* * * * * $USER_ANSIBLE sleep 50 ; cd $DIR_QUANSIBLE && ./quansible.sh fetch 2>&1 > /dev/null | tee -a $LOG_FILE_CRON" | sudo tee -a /etc/cron.d/quansible_cron 
 	crontab /etc/cron.d/quansible_cron 2>&1 | tee -a $LOG_FILE_CRON
 	service cron start 
 }
