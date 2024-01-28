@@ -202,6 +202,7 @@ function fetch_public () {
 			role_repos=curl -H "Authorization: token $auth_token" -s "https://api.github.com/search/repositories?q=user:devd4n" | grep -w clone_url | grep -o '[^"]*\.git' | grep $SRC_ROLES_FILTER
 			log "repos: $role_repos"
 			# 
+
 	        #  - name: write Ansible Roles to requirements.yml
 	        #    replace:
 	        #      regexp: '^(.*)$'
@@ -252,6 +253,9 @@ function fetch_private () {
 # Run function defined by parameter of this script (setup | init)
 if [[ $1 == "setup-env" ]]
 then
+	log "function_call:setup-env"
+	log "ROOT_DIR=$ROOT_DIR"
+	log "DIR_QUANSIBLE=$DIR_QUANSIBLE"
 	install_environment
 	su -c "./quansible.sh upgrade" $USER_ANSIBLE
 	su -c "./quansible.sh update" $USER_ANSIBLE
