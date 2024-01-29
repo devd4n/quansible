@@ -164,3 +164,6 @@ TODOs:
 - (open) Test on Docker
 - (open) Test on VM
 - Push to main
+
+BUGS:
+- ansible/requirements.yml gets filled up by fetch_public function => even if checked with grep if line allready exists

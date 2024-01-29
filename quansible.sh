@@ -205,9 +205,14 @@ function fetch_public () {
 			log "repos: $role_repos"
 			while IFS= read -r line; do
 			    # if line not exists (grep not sucessful) add line to requirements.yml file
-				# -x: whole line matching, -e ignore - as parameter interpretation, -q: quiet, -F: interpret as plain text
-			    grep -qe "-src: $line" $DIR_ANSIBLE_REQUIREMENTS/requirements.yml || log "add -src: $line"
-				grep -qe "-src: $line" $DIR_ANSIBLE_REQUIREMENTS/requirements.yml || echo "- src: $line" >> $DIR_ANSIBLE_REQUIREMENTS/requirements.yml
+				line_exists=$(grep -qe "-src: $line" $DIR_ANSIBLE_REQUIREMENTS/requirements.yml)
+				log "line_exists=$line_exists"
+				if [ $line_exists -ne 0 ]
+				then
+					# -x: whole line matching, -e ignore - as parameter interpretation, -q: quiet, -F: interpret as plain text
+			     	log "add -src: $line"
+					echo "- src: $line" >> $DIR_ANSIBLE_REQUIREMENTS/requirements.yml
+				fi
 			done <<< $role_repos
 
 	        #  - name: write Ansible Roles to requirements.yml
