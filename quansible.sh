@@ -202,12 +202,10 @@ function fetch_public () {
 			# retrieve all roles from git repo which maches a
 			auth_token=$(cat $SRC_ROLES_TOKEN_FILE)
 			role_repos=$(curl -H "Authorization: token $auth_token" -s "https://api.github.com/search/repositories?q=user:devd4n" | grep -w clone_url | grep -o '[^"]*\.git' | grep $SRC_ROLES_FILTER)
-			log "repos: $role_repos"
 			while IFS= read -r line; do
 			    # if line not exists (grep not sucessful) add line to requirements.yml file
 				# !!! Be carefull '-src: ' at start causes a grep error - inexpected : command
 				line_exists=$(cat $DIR_ANSIBLE_REQUIREMENTS/requirements.yml | grep -cF $line)
-				log "line_exists=$line_exists"
 				if [ $line_exists -eq 0 ]
 				then
 			     	log "add -src: $line"
