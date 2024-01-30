@@ -198,18 +198,18 @@ function fetch_public () {
 	  	    # SRC_ROLES_TYPE="local" # local | git | galaxy-only
 		    # SRC_ROLES_PATH="$DIR_LOCAL/public"                          # local => filepath | git => https repo | galaxy-only => ''
 		    # SRC_ROLES_FILTER=""                                         # local => '' | git => <<search filter>> | galaxy-only => '<<first-role>>, <<second-role>>, ...'
-	      
+
 			# retrieve all roles from git repo which maches a
 			auth_token=$(cat $SRC_ROLES_TOKEN_FILE)
 			role_repos=$(curl -H "Authorization: token $auth_token" -s "https://api.github.com/search/repositories?q=user:devd4n" | grep -w clone_url | grep -o '[^"]*\.git' | grep $SRC_ROLES_FILTER)
 			log "repos: $role_repos"
 			while IFS= read -r line; do
 			    # if line not exists (grep not sucessful) add line to requirements.yml file
-				line_exists=$(grep -qe "-src: $line" $DIR_ANSIBLE_REQUIREMENTS/requirements.yml)
+				# !!! Be carefull '-src: ' at start causes a grep error - inexpected : command
+				line_exists=$(cat $DIR_ANSIBLE_REQUIREMENTS/requirements.yml | grep -cF $line)
 				log "line_exists=$line_exists"
-				if [ $line_exists -ne 0 ]
+				if [ $line_exists -eq 0 ]
 				then
-					# -x: whole line matching, -e ignore - as parameter interpretation, -q: quiet, -F: interpret as plain text
 			     	log "add -src: $line"
 					echo "- src: $line" >> $DIR_ANSIBLE_REQUIREMENTS/requirements.yml
 				fi
