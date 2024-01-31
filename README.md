@@ -28,8 +28,8 @@ following Steps 1.-5. must be run with sudo rights
 ## How to use
 0. Navigate to venv/bin/
 1. ./activate
-2. Navigate to private/playbooks
-
+2. Navigate to private
+3. run playbook via ansible-playbook command
 
 ## Update Quansible
 remove and rebuilding the ./quansible directory (quansible.cfg is excluded)
@@ -77,11 +77,11 @@ venv: Python Venv to use for operation
         |   |   |   |-- inventory.yml
         |   |   |   |-- host_vars
         |   |   |-- playbooks
+        |   |   |-- requirements.yml
         |   |-- public
         |   |   |-- roles
         |   |   |   |-- ansible_role_sshd
         |   |   |   |-- ansible_role_sshd-agent
-        |   |-- requirements.yml
         |-- venv
     |-- DIR_LOCAL
 ```
@@ -97,6 +97,7 @@ Possible Structure:
 ./private/playbooks
 ./private/host_vars
 ./private/group_vars
+./private/requirements.yml
 ```
 but other structures are also possible.
 Recommendations are under development.
@@ -107,6 +108,17 @@ Recommendations are under development.
 ./roles
 
 roles are defined by variables and hosts given in the playbook so they are not critical and not secret.
+
+## Secrets
+### Authorized Key for quansible Host
+
+### SSH Tokens
+location on quansible: /home/$ANSIBLE_USER/.git-credentials
+
+=> https://stackoverflow.com/questions/49737069/    using-credentials-for-ansible-galaxy-with-private-gitlab-repo-in-a-jenkins-job
+echo "https://oauth2:${ANSIBLE_TOKEN}@github.com" > ~/.git-credentials
+chmod 600 ~/.git-credentials
+=> testing with private repo : ansible_role_sshd-agent.git
 
 ## Import roles
 
