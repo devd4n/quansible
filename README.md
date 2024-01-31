@@ -160,10 +160,31 @@ git push origin main
 
 # TODOs-Bugs
 
-TODOs:
+## TODOs:
+
+- Implement Personal Access Token based authentication to Git Repos
+    => https://stackoverflow.com/questions/49737069/    using-credentials-for-ansible-galaxy-with-private-gitlab-repo-in-a-jenkins-job
+    git config --global credential.helper store
+    echo "https://oauth2:${ANSIBLE_TOKEN}@github.com" > ~/.git-credentials
+    ansible-galaxy install -r ./requirements_test.yml --ignore-errors
+    chmod 600 ~/.git-credentials
+    => testing with private repo : ansible_role_sshd-agent.git
+
+- Add secrets to doku
+
 - (open) Test on Docker
+
 - (open) Test on VM
+
 - Push to main
 
-BUGS:
-- ansible/requirements.yml gets filled up by fetch_public function => even if checked with grep if line allready exists
+## Bugs:
+
+not testet yet
+
+## Future Features
+- Implement ansible role versioning (requirements.yml)
+- 
+
+
+
