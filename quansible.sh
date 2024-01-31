@@ -131,6 +131,10 @@ function update_ansible () {
 	echo "cd /srv" >> /home/$USER_ANSIBLE/.bashrc
 	echo "source $DIR_LIVE/venv/bin/activate" >> /home/$USER_ANSIBLE/.bashrc
 
+	# setup credential.helper store -> reads ~/.git-credentials file
+	git config --global credential.helper store
+	chmod 600 ~/.git-credentials
+
 	# run init playbook
 	cd $DIR_ANSIBLE
 	ansible-playbook --extra-vars $EXTRA_VARS $INIT_PLAYBOOK # shouldn't be needed "--ask-become-pass"
