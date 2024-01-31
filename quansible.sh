@@ -179,6 +179,8 @@ function setup_cronjob () {
 	service cron start 
 }
 
+
+
 #############################################################################
 # Fetch quansible-live/ansible/public from quansible-local or remote       # 
 #############################################################################
@@ -246,17 +248,13 @@ function fetch_private () {
 	elif [ ${SRC_PRIV_TYPE} == "git" ]
 	then
 	  log "fetch_private::type:git"
-	  log ERROR "fetch_private from git is currently under development. Please use local!"
-	  exit
-	fi
-	# PSEUDO CODE
-	#if SRC_PRIV=="local"
-	# -> rsync quansible-local/priv_path > $DIR_LIVE/priv_path
-	#elif SRC_PRIV=="remote"
 	  # Check if current repo is the repo which is configured currently
 	  # if no -> remove full and git clone => git clone <<what to clone>> $QUANSIBLE_DIR/.temp_quansible/ --depth 1
 	  # 
 	  # if yes -> git pull (force -overwrite local)
+	  log ERROR "fetch_private from git is currently under development. Please use local!"
+	  exit
+	fi
 	exit
 }
 
