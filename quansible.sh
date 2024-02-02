@@ -155,10 +155,12 @@ function update_ansible () {
 function upgrade() {
 	cat <<-EOF > $DIR_LIVE/update_quansible.sh
 	#!/bin/bash
+	cp $DIR_LIVE/quansible/quansible.env /tmp/quansible.env
 	rm -r $DIR_LIVE/quansible
 	cd $DIR_LIVE
 	git clone $GITHUB_QUANSIBLE -–depth 1
 	chmod +x $DIR_LIVE/quansible/quansible.sh
+	mv $DIR_LIVE/quansible/quansible.env /tmp/quansible.env
 	EOF
 	chmod +x $DIR_LIVE/update_quansible.sh
 }
