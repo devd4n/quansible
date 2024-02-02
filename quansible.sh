@@ -41,14 +41,14 @@ function log () {
 #
 if [ -r "$DIR_QUANSIBLE/quansible.env" ]             # if custom config exists
 then
-	echo "load custom quansible.env"          
+	log "load custom quansible.env"          
 	. "$DIR_QUANSIBLE/quansible.env"                   # load custom config
 elif [ -r "$DIR_QUANSIBLE/default_quansible.env" ]   # if no custom config exits use default config fil
 then
-	echo "load default quansible.env"
+	log "load default quansible.env"
 	. "$DIR_QUANSIBLE/default_quansible.env"           # load default config
 else
-	echo "ERROR: something went wrong: "./quansible.env" or "default_quansible.env" file not found \n Or script is running not from the quansible directory"
+	log "ERROR: something went wrong: "./quansible.env" or "default_quansible.env" file not found \n Or script is running not from the quansible directory"
 	exit
 fi
 
