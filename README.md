@@ -174,13 +174,8 @@ git push origin main
 
 ## TODOs:
 
-- Implement Personal Access Token based authentication to Git Repos
-    => https://stackoverflow.com/questions/49737069/    using-credentials-for-ansible-galaxy-with-private-gitlab-repo-in-a-jenkins-job
-    git config --global credential.helper store
-    echo "https://oauth2:${ANSIBLE_TOKEN}@github.com" > ~/.git-credentials
-    ansible-galaxy install -r ./requirements_test.yml --ignore-errors
-    chmod 600 ~/.git-credentials
-    => testing with private repo : ansible_role_sshd-agent.git
+- Remove private/inventory/playbooks (only private/playbooks needed!)
+- Security of Secrets - Read only rights where possible
 
 - Add secrets to doku
 
@@ -192,7 +187,15 @@ git push origin main
 
 ## Bugs:
 
-not testet yet
+- ansible/ansible.cfg -> inventory = /srv/quansible-live/ansible/private/inventory/inventory.yml => inventory.yml missing
+
+- Wrong Permissions in "Root" /srv folder
+    (venv) usr_quansible@fcb2266f22a1:/srv/quansible-local$ ls -la
+    total 8
+    drwxrwxrwx 1 root          root           4096 Feb  3 01:38 .
+    drwxr-xr-x 1 usr_quansible usr_quansible  4096 Feb  3 00:09 ..
+    drwxrwxrwx 1 root          root           4096 Feb  3 01:28 private
+    drwxr-xr-x 1 usr_quansible ansible_admins 4096 Feb  3 01:38 public
 
 ## Future Features
 - Implement ansible role versioning (requirements.yml)
