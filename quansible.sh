@@ -70,7 +70,7 @@ function install_environment () {
 	
 	apt update
 	# Install system requirements and apps for virtualenv
-	apt install curl sudo python3-pip python3-venv vim cron git locales openssh-server -y
+	apt install curl sudo python3-pip python3-venv vim cron git locales openssh-server rsync -y
 	# https://www.codegrepper.com/code-examples/shell/python+headers+are+missing+in+%2Fusr%2Finclude%2Fpython3.6m+%26quot%3Byum%26quot%3B
 	# https://stackoverflow.com/questions/31508612/pip-install-unable-to-find-ffi-h-even-though-it-recognizes-libffi
 	apt install python3-dev libffi-dev -y
