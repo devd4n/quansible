@@ -269,8 +269,12 @@ then
 	log "ROOT_DIR=$ROOT_DIR"
 	log "DIR_QUANSIBLE=$DIR_QUANSIBLE"
 	install_environment
-	su -c "./quansible.sh upgrade" $USER_ANSIBLE
-	su -c "./quansible.sh update" $USER_ANSIBLE
+	su -c "$DIR_QUANSIBLE/quansible.sh upgrade" $USER_ANSIBLE
+	if [ $? -ne 0 ]; then
+		echo "Error: $DIR_QUANSIBLE is not reachable by user: $USER_ANSIBLE"
+  		exit 1
+	fi
+	su -c "$DIR_QUANSIBLE/quansible.sh update" $USER_ANSIBLE
 	setup_cronjob
 	#su -c "./quansible.sh update-roles" $USER_ANSIBLE
 	exit
