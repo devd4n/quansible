@@ -57,6 +57,7 @@ function setup_secrets () {
   	touch /home/$USER_ANSIBLE/.ssh/known_hosts
   	ssh-keyscan github.com >> /home/$USER_ANSIBLE/.ssh/known_hosts
 	ln -s "$SSHKEY_CLIENT" /home/$USER_ANSIBLE/.ssh/authorized_keys
+	mkdir -p /home/$USER_ANSIBLE/.git_tokens
   	ln -s "$SSHKEY_TOKEN" /home/$USER_ANSIBLE/.git_tokens/q_public_token
   	ln -s "$SSHKEY_TOKENFILE" /home/$USER_ANSIBLE/.git-credentials
   	ln -s "$SSHKEY_MASTER_PRIVATE" /home/$USER_ANSIBLE/.ssh/id_master
