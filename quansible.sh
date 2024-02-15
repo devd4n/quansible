@@ -56,11 +56,11 @@ function setup_secrets () {
 	mkdir /home/$USER_ANSIBLE/.ssh/
   	touch /home/$USER_ANSIBLE/.ssh/known_hosts
   	ssh-keyscan github.com >> /home/$USER_ANSIBLE/.ssh/known_hosts
-	ln -s $SSHKEY_CLIENT /home/$USER_ANSIBLE/.ssh/authorized_keys
-  	ln -s $SSHKEY_TOKEN /home/$USER_ANSIBLE/.git_tokens/q_public_token
-  	ln -s $SSHKEY_TOKENFILE /home/$USER_ANSIBLE/.git-credentials
-  	ln -s $SSHKEY_MASTER_PRIVATE /home/$USER_ANSIBLE/.ssh/id_master
-  	ln -s $SSHKEY_MASTER_PUBLIC /home/$USER_ANSIBLE/.ssh/id_master.pub
+	ln -s "$SSHKEY_CLIENT" /home/$USER_ANSIBLE/.ssh/authorized_keys
+  	ln -s "$SSHKEY_TOKEN" /home/$USER_ANSIBLE/.git_tokens/q_public_token
+  	ln -s "$SSHKEY_TOKENFILE" /home/$USER_ANSIBLE/.git-credentials
+  	ln -s "$SSHKEY_MASTER_PRIVATE" /home/$USER_ANSIBLE/.ssh/id_master
+  	ln -s "$SSHKEY_MASTER_PUBLIC" /home/$USER_ANSIBLE/.ssh/id_master.pub
 }
 
 # install necessary dependencies and set system permissions
