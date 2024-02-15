@@ -52,7 +52,16 @@ else
 	exit
 fi
 
-
+function setup_secrets () {
+	mkdir /home/$USER_ANSIBLE/.ssh/
+  	touch /home/$USER_ANSIBLE/.ssh/known_hosts
+  	ssh-keyscan github.com >> /home/$USER_ANSIBLE/.ssh/known_hosts
+	ln -s $SSHKEY_CLIENT /home/$USER_ANSIBLE/.ssh/authorized_keys
+  	ln -s $SSHKEY_TOKEN /home/$USER_ANSIBLE/.git_tokens/q_public_token
+  	ln -s $SSHKEY_TOKENFILE /home/$USER_ANSIBLE/.git-credentials
+  	ln -s $SSHKEY_MASTER_PRIVATE /home/$USER_ANSIBLE/.ssh/id_master
+  	ln -s $SSHKEY_MASTER_PUBLIC /home/$USER_ANSIBLE/.ssh/id_master.pub
+}
 
 # install necessary dependencies and set system permissions
 function install_environment () {
@@ -77,9 +86,11 @@ function install_environment () {
 	# https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=998232
 	#curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 	
+	setup_secrets
 	# give full ownership to the ansible user
 	chown -R $USER_ANSIBLE:$USER_ANSIBLE $DIR_LIVE
 	chown -R $USER_ANSIBLE:$USER_ANSIBLE $DIR_QUANSIBLE
+	chown -R $USER_ANSIBLE:$USER_ANSIBLE /home/$USER_ANSIBLE
 }
 
 # update quansible environment
