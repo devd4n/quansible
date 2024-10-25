@@ -52,6 +52,13 @@ else
 	exit
 fi
 
+# Set Current User which runs this Script as Quansible User if User is not explicitly defined in .env file
+if [ USER_ANSIBLE == '' ]
+then
+	USER_ANSIBLE = $(env | grep SUDO_USER | cut -d '=' -f 2)
+fi
+
+
 function setup_secrets () {
 	mkdir /home/$USER_ANSIBLE/.ssh/
   	touch /home/$USER_ANSIBLE/.ssh/known_hosts
@@ -63,6 +70,7 @@ function setup_secrets () {
   	ln -s "$SSHKEY_MASTER_PRIVATE" /home/$USER_ANSIBLE/.ssh/id_master
   	ln -s "$SSHKEY_MASTER_PUBLIC" /home/$USER_ANSIBLE/.ssh/id_master.pub
 }
+
 
 # install necessary dependencies and set system permissions
 function install_environment () {
