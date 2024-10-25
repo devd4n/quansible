@@ -10,7 +10,7 @@ Currently only debian (debian, ubuntu) like systems are supported
 A User with sudo rights is required
 
 1. (root)# apt install sudo
-2. usermod -aG sudo <<user>>
+2. adduser <<user>> sudo  || OR || usermod -aG sudo <<user>>
 
 ## How to setup
 following Steps 1.-5. must be run with sudo rights
