@@ -64,12 +64,13 @@ function setup_secrets () {
   	touch /home/$USER_ANSIBLE/.ssh/known_hosts
   	ssh-keyscan github.com >> /home/$USER_ANSIBLE/.ssh/known_hosts
 	ln -s "$SSHKEY_CLIENT" /home/$USER_ANSIBLE/.ssh/authorized_keys
-	mkdir -p /home/$USER_ANSIBLE/.git_tokens
-  	ln -s "$SSHKEY_TOKEN" /home/$USER_ANSIBLE/.git_tokens/q_public_token
   	ln -s "$SSHKEY_TOKENFILE" /home/$USER_ANSIBLE/.git-credentials
   	ln -s "$SSHKEY_MASTER_PRIVATE" /home/$USER_ANSIBLE/.ssh/id_master
   	ln -s "$SSHKEY_MASTER_PUBLIC" /home/$USER_ANSIBLE/.ssh/id_master.pub
+	mkdir -p /home/$USER_ANSIBLE/.git_tokens
+  	ln -s "$SSHKEY_TOKEN" /home/$USER_ANSIBLE/.git_tokens/q_public_token
 }
+
 
 
 # install necessary dependencies and set system permissions
@@ -148,7 +149,7 @@ function update_ansible () {
 	fi
 
 	# add start directory to bashrc
-	echo "cd /srv" >> /home/$USER_ANSIBLE/.bashrc
+	echo "cd $($ROOT_DIR)" >> /home/$USER_ANSIBLE/.bashrc # TODO: CHECK IF THIS WORKS!!!
 	echo "source $DIR_LIVE/venv/bin/activate" >> /home/$USER_ANSIBLE/.bashrc
 
 	# setup credential.helper store -> reads ~/.git-credentials file
@@ -231,7 +232,7 @@ function fetch_public () {
 			    # if line not exists (grep not sucessful) add line to requirements.yml file
 				# !!! Be carefull '-src: ' at start causes a grep error - inexpected : command
 				line_exists=$(cat $DIR_ANSIBLE_REQUIREMENTS/requirements.yml | grep -cF $line)
-				if [ $line_exists -eq 0 ]
+				if [ "$line_exists" = 0 ]
 				then
 			     	log "add -src: $line"
 					echo "- src: $line" >> $DIR_ANSIBLE_REQUIREMENTS/requirements.yml

@@ -1,7 +1,7 @@
 # quansible
 
 ## About
-quansible is a tool for creating an ansible structure on an ansible host
+quansible is a tool which creates a well defined ansible structure and is capable of pulling roles and other ansible components from an github repository.
 
 ## Supported OSes
 Currently only debian (debian, ubuntu) like systems are supported
@@ -21,9 +21,8 @@ following Steps 1.-5. must be run with sudo rights
     - too get development Branch: git clone -b dev https://github.com/devd4n/quansible.git
 3. `sudo cd quansible`
 4. `sudo chmod +x quansible.sh`
-5. `sudo ./quansible.sh setup-env`
-6. `su usr_quansible`
-
+5. Configure Quansible via Config file -> see Config
+6. `sudo ./quansible.sh setup-env`
 
 ## How to use
 0. Navigate to venv/bin/
@@ -48,18 +47,13 @@ ROOT_DIR can be defined in the quansible_setup.sh script.
 the ROOT_DIR is the project folder where all data of the quansible environment lifes.
 in the following Structure ROOT_DIR is replaced by . for Root.
 
-inside the ROOT_DIR quansible creates two directories:
+inside the ROOT_DIR quansible creates two directories (beside the quansible directory):
 
 DIR_LIVE
 This directory loads the private part and the roles from the DIR_LOCAL or a external source (configuration dependend)
 
 DIR_LOCAL
 This directory should be used to develop/maintain the private part of the DIR_LIVE. And also to develop Roles.
-
-Quansible LIVE DIR is seperated in three different subdirectories:
-quansible: contains all configuration changes and the structure of the project.
-ansible: contains the manuall and individual ansible files.
-venv: Python Venv to use for operation
 
 ```
 |-- "ROOT_DIR"
@@ -94,7 +88,7 @@ Possible Structure:
 ```
 ./private
 ./private/secrets
-./private/playbooks
+./private/playbooks/
 ./private/host_vars
 ./private/group_vars
 ./private/requirements.yml
@@ -177,7 +171,7 @@ git push origin main
 - Remove private/inventory/playbooks (only private/playbooks needed!)
 - Security of Secrets - Read only rights where possible
 
-- Add secrets to doku
+- Add secrets to doku (how and where secrets should be configured)
 
 - (open) Test on Docker
 
