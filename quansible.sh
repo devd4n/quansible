@@ -194,7 +194,7 @@ function upgrade() {
 # https://stackoverflow.com/questions/610839/how-can-i-programmatically-create-a-new-cron-job/610860#610860
 # Cron only runs every one minute to start the job each 10sec 6 jobs are started with different sleep times
 # retrieved from: https://stackoverflow.com/questions/30295868/how-to-setup-cron-job-to-run-every-10-seconds-in-linux
-
+# flock is used to ensure that only one process of quansible.sh is running (cause multiple processes can crash the system or do weird beavior in installing roles)
 function setup_cronjob () {
 	echo "* * * * * $USER_ANSIBLE flock -n /tmp/quansible.lock -c 'cd $DIR_QUANSIBLE && ./quansible.sh fetch 2>&1 > /dev/null | tee -a $LOG_FILE_CRON'" | sudo tee /etc/cron.d/quansible_cron
 	echo "* * * * * $USER_ANSIBLE sleep 10 ; flock -n /tmp/quansible.lock -c 'cd $DIR_QUANSIBLE && ./quansible.sh fetch 2>&1 > /dev/null | tee -a $LOG_FILE_CRON'" | sudo tee -a /etc/cron.d/quansible_cron
