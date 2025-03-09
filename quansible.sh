@@ -110,7 +110,7 @@ function update_ansible () {
 	INIT_PLAYBOOK=$DIR_QUANSIBLE/pb_init-quansible.yml
 
 	# create necessary folders
-	mkdir --parents $DIR_LIVE $DIR_LOCAL $DIR_ANSIBLE $DIR_INVENTORY $DIR_ANSIBLE_EXTRA_VARS
+	mkdir --parents $DIR_LIVE $DIR_LOCAL $DIR_LOCAL_PRIVATE $DIR_LOCAL_PUBLIC $DIR_ANSIBLE $DIR_INVENTORY $DIR_ANSIBLE_EXTRA_VARS
 	
 	# write variables to file
 	cat <<-EOF > $DIR_ANSIBLE_EXTRA_VARS/ansible_vars.yml
