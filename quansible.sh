@@ -320,8 +320,8 @@ then
 elif [[ $1 == "fetch" ]]
 then
 	log "function_call:fetch"
-	fetch_public
 	fetch_private
+	fetch_public
 elif [[ $1 == "update-roles" ]]
 then
 	fetch_public
