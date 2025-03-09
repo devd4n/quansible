@@ -113,7 +113,7 @@ function update_ansible () {
 	mkdir --parents $DIR_LIVE $DIR_LOCAL $DIR_LOCAL_PRIVATE $DIR_LOCAL_PUBLIC $DIR_ANSIBLE $DIR_INVENTORY $DIR_ANSIBLE_EXTRA_VARS
 	
 	chmod 0775 $DIR_LOCAL
-	
+
 	echo "cd $DIR_LIVE/ansible/private/playbooks/" >> /home/$USER_ANSIBLE/.profile
 
 	# write variables to file
@@ -277,7 +277,7 @@ function fetch_private () {
 	if [ ${SRC_PRIV_TYPE} == "local" ]
 	then
 	  log "fetch_private::type:local"
-	  rsync -rv "${SRC_PRIV_PATH}/" $DIR_LOCAL_PRIVATE
+	  rsync -rv "${SRC_PRIV_PATH}/" $DIR_LOCAL_PRIVATE --delete
 	elif [ ${SRC_PRIV_TYPE} == "git" ]
 	then
 	  log "fetch_private::type:git"
