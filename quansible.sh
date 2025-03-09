@@ -196,16 +196,15 @@ function upgrade() {
 # retrieved from: https://stackoverflow.com/questions/30295868/how-to-setup-cron-job-to-run-every-10-seconds-in-linux
 
 function setup_cronjob () {
-	echo "* * * * * $USER_ANSIBLE cd $DIR_QUANSIBLE && ./quansible.sh fetch 2>&1 > /dev/null | tee -a $LOG_FILE_CRON" | sudo tee /etc/cron.d/quansible_cron
-	echo "* * * * * $USER_ANSIBLE sleep 10 ; cd $DIR_QUANSIBLE && ./quansible.sh fetch 2>&1 > /dev/null | tee -a $LOG_FILE_CRON" | sudo tee -a /etc/cron.d/quansible_cron
-	echo "* * * * * $USER_ANSIBLE sleep 20 ; cd $DIR_QUANSIBLE && ./quansible.sh fetch 2>&1 > /dev/null | tee -a $LOG_FILE_CRON" | sudo tee -a /etc/cron.d/quansible_cron
-	echo "* * * * * $USER_ANSIBLE sleep 30 ; cd $DIR_QUANSIBLE && ./quansible.sh fetch 2>&1 > /dev/null | tee -a $LOG_FILE_CRON" | sudo tee -a /etc/cron.d/quansible_cron
-	echo "* * * * * $USER_ANSIBLE sleep 40 ; cd $DIR_QUANSIBLE && ./quansible.sh fetch 2>&1 > /dev/null | tee -a $LOG_FILE_CRON" | sudo tee -a /etc/cron.d/quansible_cron
-	echo "* * * * * $USER_ANSIBLE sleep 50 ; cd $DIR_QUANSIBLE && ./quansible.sh fetch 2>&1 > /dev/null | tee -a $LOG_FILE_CRON" | sudo tee -a /etc/cron.d/quansible_cron 
+	echo "* * * * * $USER_ANSIBLE flock -n /tmp/quansible.lock -c 'cd $DIR_QUANSIBLE && ./quansible.sh fetch 2>&1 > /dev/null | tee -a $LOG_FILE_CRON'" | sudo tee /etc/cron.d/quansible_cron
+	echo "* * * * * $USER_ANSIBLE sleep 10 ; flock -n /tmp/quansible.lock -c 'cd $DIR_QUANSIBLE && ./quansible.sh fetch 2>&1 > /dev/null | tee -a $LOG_FILE_CRON'" | sudo tee -a /etc/cron.d/quansible_cron
+	echo "* * * * * $USER_ANSIBLE sleep 20 ; flock -n /tmp/quansible.lock -c 'cd $DIR_QUANSIBLE && ./quansible.sh fetch 2>&1 > /dev/null | tee -a $LOG_FILE_CRON'" | sudo tee -a /etc/cron.d/quansible_cron
+	echo "* * * * * $USER_ANSIBLE sleep 30 ; flock -n /tmp/quansible.lock -c 'cd $DIR_QUANSIBLE && ./quansible.sh fetch 2>&1 > /dev/null | tee -a $LOG_FILE_CRON'" | sudo tee -a /etc/cron.d/quansible_cron
+	echo "* * * * * $USER_ANSIBLE sleep 40 ; flock -n /tmp/quansible.lock -c 'cd $DIR_QUANSIBLE && ./quansible.sh fetch 2>&1 > /dev/null | tee -a $LOG_FILE_CRON'" | sudo tee -a /etc/cron.d/quansible_cron
+	echo "* * * * * $USER_ANSIBLE sleep 50 ; flock -n /tmp/quansible.lock -c 'cd $DIR_QUANSIBLE && ./quansible.sh fetch 2>&1 > /dev/null | tee -a $LOG_FILE_CRON'" | sudo tee -a /etc/cron.d/quansible_cron 
 	crontab /etc/cron.d/quansible_cron 2>&1 | tee -a $LOG_FILE_CRON
 	service cron start 
 }
-
 
 
 #############################################################################
@@ -232,7 +231,7 @@ function fetch_public () {
 			if [ ! -e "$DIR_ANSIBLE_REQUIREMENTS/requirements.yml" ]; then
                touch "$DIR_ANSIBLE_REQUIREMENTS/requirements.yml"
             fi
-			
+
 			while IFS= read -r line; do
 			    # if line not exists (grep not sucessful) add line to requirements.yml file
 				# !!! Be carefull '-src: ' at start causes a grep error - inexpected : command
