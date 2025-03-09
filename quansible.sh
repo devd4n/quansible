@@ -228,6 +228,10 @@ function fetch_public () {
 			# retrieve all roles from git repo which maches a
 			auth_token=$(cat $SRC_ROLES_TOKEN_FILE)
 			role_repos=$(curl -H "Authorization: token $auth_token" -s "$ROLES_REPO" | grep -w clone_url | grep -o '[^"]*\.git' | grep "$SRC_ROLES_FILTER")
+
+			if [ ! -e "$DIR_ANSIBLE_REQUIREMENTS/requirements.yml" ]; then
+               touch "$DIR_ANSIBLE_REQUIREMENTS/requirements.yml"
+            fi
 			
 			while IFS= read -r line; do
 			    # if line not exists (grep not sucessful) add line to requirements.yml file
