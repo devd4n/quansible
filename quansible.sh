@@ -95,7 +95,12 @@ function install_environment () {
 	apt install python3-dev libffi-dev -y
 	# https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=998232
 	#curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-	apt install terraform -y
+	
+	# Install Terraform
+	curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+    sudo apt-add-repository "deb [arch=$(dpkg --print-architecture)] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+    sudo apt update
+    sudo apt install terraform
 
 	setup_secrets
 	# give full ownership to the ansible user
