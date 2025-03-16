@@ -97,10 +97,10 @@ function install_environment () {
 	#curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 	
 	# Install Terraform
-	curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
-    sudo apt-add-repository "deb [arch=$(dpkg --print-architecture)] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
-    sudo apt update
-    sudo apt install terraform
+	curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add -
+    apt-add-repository "deb [arch=$(dpkg --print-architecture)] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+    apt update
+    apt install terraform
 
 	setup_secrets
 	# give full ownership to the ansible user
