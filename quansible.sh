@@ -95,7 +95,8 @@ function install_environment () {
 	apt install python3-dev libffi-dev -y
 	# https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=998232
 	#curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-	
+	apt install terraform -y
+
 	setup_secrets
 	# give full ownership to the ansible user
 	chown -R $USER_ANSIBLE:$USER_ANSIBLE $DIR_LIVE
