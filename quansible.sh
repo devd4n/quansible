@@ -96,9 +96,13 @@ function install_environment () {
 	# https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=998232
 	#curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 	
+	# Install Repo Add Tool
+	wget -qO /usr/bin/apt-add-repo https://raw.githubusercontent.com/devd4n/apt-add-repo/main/apt-add-repo.sh
+    # make it executable
+	chmod +x /usr/bin/apt-add-repo
+
 	# Install Terraform
-	curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add -
-    apt-add-repository "deb [arch=$(dpkg --print-architecture)] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+	apt-add-repo terraform https://apt.releases.hashicorp.com https://apt.releases.hashicorp.com/gpg $(lsb_release -cs) main
     apt update
     apt install terraform
 
