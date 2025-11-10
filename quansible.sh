@@ -298,7 +298,6 @@ function fetch_private () {
 	  log ERROR "fetch_private from git is currently under development. Please use local!"
 	  exit
 	fi
-	exit
 }
 
 # Run function defined by parameter of this script (setup | init)
